@@ -11,7 +11,7 @@
 #include <d3dcompiler.h>
 #include <xnamath.h>
 #include "resource.h"
-//
+
 //---------------------------------------------------------------------------------
 //define const 
 //-------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ struct SimpleVertex
 HINSTANCE               g_hInst = NULL;					//윈도우 인스턴스 
 HWND                    g_hWnd = NULL;					//윈도우 핸들 
 D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL; //드라이버 타입 객체
-D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0; //피처레벨
+D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0; //피처레벨 
 ID3D11Device*           g_pd3dDevice = NULL; //디바이스 객체
 ID3D11DeviceContext*    g_pImmediateContext = NULL; //디바이스 컨텍스트
 IDXGISwapChain*         g_pSwapChain = NULL; //스왑체인 객체
@@ -378,7 +378,6 @@ HRESULT InitDevice() //디바이스 초기화
 		XMFLOAT3( 0.4f, 0.1f, 0.0f), //3
 		XMFLOAT3(0.2f, -0.4f, 0.0f), //4
 		XMFLOAT3(-0.2f, -0.4f, 0.0f), //5
-		//XMFLOAT3( 0.9f, 0.1f, 0.0f), //6
     };
 	VertexCount = sizeof(vertices) / sizeof(vertices[0]);
     D3D11_BUFFER_DESC bd;
@@ -394,12 +393,12 @@ HRESULT InitDevice() //디바이스 초기화
     if( FAILED( hr ) )
         return hr;
 
-    // Set vertex buffer
+    // 정점 버퍼 설정 
     UINT stride = sizeof( SimpleVertex );
     UINT offset = 0;
     g_pImmediateContext->IASetVertexBuffers( 0, 1, &g_pVertexBuffer, &stride, &offset );
 
-    // Set primitive topology
+    // 위상 기하 설정 
     g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); //표현할 방법
 		//D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 	//D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
@@ -452,15 +451,15 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 }
 
 //--------------------------------------------------------------------------------------
-// Render a frame
+// 프레임 렌더링
 //--------------------------------------------------------------------------------------
 void Render()
 {
-    // Clear the back buffer 
+    // 백 버퍼 클리어 
     float ClearColor[4] = { 0.4f, 0.425f, 0.3f, 1.0f }; // red,green,blue,alpha
     g_pImmediateContext->ClearRenderTargetView( g_pRenderTargetView, ClearColor );
 	
-    // Render a triangle
+    // 삼각형 렌더링 
 	g_pImmediateContext->VSSetShader( g_pVertexShader, NULL, 0 );
 	g_pImmediateContext->PSSetShader( g_pPixelShader, NULL, 0 );
 	g_pImmediateContext->DrawIndexed(15,0,0); //정점 개수 | 시작 인덱스 | 기준점 
