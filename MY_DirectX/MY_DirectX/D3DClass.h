@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------------
 // File: D3DClass.h
-//
-// Copyright PSDent. All rights reserved.
 //-------------------------------------------------------------------------------------
 #pragma once
 
@@ -22,6 +20,8 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
+using namespace DirectX;
+
 class D3DClass
 {
 public:
@@ -30,9 +30,13 @@ public:
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
 
-	bool InitD3D(HWND, int, int);
+	bool InitD3D(HWND, int, int, float, float, bool, bool);
 	void Release();
 	void ClearScene();
+
+	XMMATRIX GetProjMatrix();
+	XMMATRIX GetWorldMatrix();
+	XMMATRIX GetOrthoMatrix();
 
 private:
 	IDXGISwapChain* m_swapChain;
@@ -44,5 +48,7 @@ private:
 	ID3D11RasterizerState* m_rasterState;
 	ID3D11Texture2D* m_depthStencilBuffer;
 
-
+	XMMATRIX m_projMatrix;
+	XMMATRIX m_worldMatrix;
+	XMMATRIX m_orthoMatrix;
 };

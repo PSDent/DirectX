@@ -2,8 +2,6 @@
 // File: WinMain.cpp
 //
 // This Source is for Initialize Window and Show the Window.
-//
-// Copyright PSDent. All rights reserved.
 //-------------------------------------------------------------------------------------
 
 #include "WinMain.h"
@@ -18,20 +16,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	RenderClass *renderClass = new RenderClass;
 
-	screen.H = GetSystemMetrics(SM_CYSCREEN);
-	screen.W = GetSystemMetrics(SM_CXSCREEN);
+	int w = GetSystemMetrics(SM_CXSCREEN), h = GetSystemMetrics(SM_CYSCREEN);
 
 	// Initialize Window to show 
-	if(InitWindow(hInstance, nCmdShow, screen.W, screen.H) != S_OK)
+	if(InitWindow(hInstance, nCmdShow, w, h) != S_OK)
 		return false;
 
 	// Initialize Direct3D 
-	if(!renderClass->Setup(g_hwnd, screen.W, screen.H)) // There are many problem. you must fix it .
+	if(!renderClass->Setup(g_hwnd, screen.W, screen.H)) 
 		return false;
 
 	MSG Message = { 0 };
 
-	while (WM_QUIT != Message.message)
+	while (WM_QUIT != Message.message) 
 	{
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
 		{
@@ -40,7 +37,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		else
 		{
-			renderClass->Update();
+			renderClass->Update(); // Rendering Function.
 		}
 	}
 
@@ -53,8 +50,34 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 int APIENTRY InitWindow(HINSTANCE hInstance, int nCmdShow, int width, int height)  
 {
 	WNDCLASSEX wndEx;
+	int Xpos, Ypos;
+	DEVMODE scrSet;
 
-	g_hInst = hInstance;
+	if (WINDOW_MODE)
+	{
+		width = 1000;
+		height = 800;
+
+		Xpos = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
+		Ypos = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
+	}
+	else
+	{
+		memset(&scrSet, 0, sizeof(scrSet));
+
+		scrSet.dmSize = sizeof(scrSet);
+		scrSet.dmPelsWidth = (unsigned long)screen.W;
+		scrSet.dmPelsHeight = (unsigned long)screen.H;
+		scrSet.dmBitsPerPel = 32; //32bit = R8 G8 B8 A8 
+		scrSet.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		ChangeDisplaySettings(&scrSet, CDS_FULLSCREEN);
+
+		Xpos = Ypos = 0;
+	}
+
+	screen.H = height;
+	screen.W = width;
 
 	wndEx.cbSize = sizeof(WNDCLASSEX);
 	wndEx.cbClsExtra = 0;
@@ -75,11 +98,11 @@ int APIENTRY InitWindow(HINSTANCE hInstance, int nCmdShow, int width, int height
 		WS_EX_APPWINDOW,
 		lpszClass, 
 		lpszClass,
-		 WS_BORDER | WS_SYSMENU,
-		screen.W / 4,  // Start posX
-		screen.H / 6,  // Start posY
-		screen.W - screen.W / 2,  // Width
-		screen.H - screen.H / 3,  // Height
+		 WS_BORDER ,
+		Xpos,  // Start posX
+		Ypos,  // Start posY
+		width,  // Width
+		height,  // Height
 		NULL,
 		(HMENU)NULL,
 		hInstance,
@@ -100,6 +123,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMessage)
 	{
+	case WM_KEYDOWN:
+		switch (wParam) {
+		case VK_ESCAPE:
+			PostQuitMessage(0);
+			break;
+		}
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;

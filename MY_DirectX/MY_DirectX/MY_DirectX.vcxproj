@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -75,9 +75,9 @@
     <LibraryPath>D:\DXSDK\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExecutablePath>D:\DXSDK\Utilities\bin\x64;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>D:\DXSDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\DXSDK\Lib\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>F:\DirectX SDK\Utilities\bin\x64;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>F:\DirectX SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\DirectX SDK\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,13 +129,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CameraClass.h" />
     <ClInclude Include="D3DClass.h" />
+    <ClInclude Include="InputClass.h" />
     <ClInclude Include="RenderClass.h" />
+    <ClInclude Include="VertexModelClass.h" />
     <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraClass.cpp" />
     <ClCompile Include="D3DClass.cpp" />
+    <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="RenderClass.cpp" />
+    <ClCompile Include="VertexModelClass.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------------
 // File: WinMain.h
-//
-// Copyright PSDent. All rights reserved.
 //-------------------------------------------------------------------------------------
 
 #pragma once
@@ -22,11 +20,9 @@ typedef struct {
 //---------------
 // GLOBAL
 //---------------
-const bool FULL_SCREEN = false;
-
 static SCREEN_SIZE	screen;
 static HINSTANCE	g_hInst = NULL;
-static LPCTSTR		lpszClass = TEXT("DirectX Frame Work"); // Name of Window Title bar.
+static const LPCTSTR		lpszClass = TEXT("DirectX Frame Work"); // Name of Window Title bar.
 static HWND			g_hwnd = NULL;								  // Window Handle. 
 
 // Initialize WindowStyle Class

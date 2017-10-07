@@ -1,14 +1,16 @@
 //---------------------------------------------------------------------------------
 // File: RenderClass.h
-//
-// Copyright PSDent. All rights reserved.
 //-------------------------------------------------------------------------------------
 #pragma once
 #include "D3DClass.h"
 
+#define WINDOW_MODE true
+#define VSYNC       true
+#define SCREEN_FAR  1000.0f
+#define SCREEN_NEAR 0.1f
+
 class RenderClass {
 public:
-	RenderClass* renderclass;
 	D3DClass *d3dclass;
 
 public:
