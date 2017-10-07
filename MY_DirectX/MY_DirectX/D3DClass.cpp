@@ -270,7 +270,7 @@ bool D3DClass::InitD3D(HWND hwnd, int width, int height, float screenNear, float
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	//=================================================================
-	// Create Rasterize Description.
+	// Create Rasterize Description..
 	//=================================================================
 	rasterizeDesc.AntialiasedLineEnable = false;
 	rasterizeDesc.CullMode = D3D11_CULL_BACK;
