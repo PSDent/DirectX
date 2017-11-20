@@ -18,7 +18,7 @@ public:
 	~D3DClass();
 	HRESULT InitD3D();
 	ID3D11Device* GetDevice();
-	ID3D11DeviceContext GetDeviceContext();
+	ID3D11DeviceContext GetDeviceContext(); //
 
 
 private:
