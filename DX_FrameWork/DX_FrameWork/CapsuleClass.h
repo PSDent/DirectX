@@ -6,6 +6,8 @@
 class CapsuleClass {
 public:
 	CapsuleClass();
+	~CapsuleClass();
+
 	HRESULT InitEngine(HWND, int, int, bool);
 	void Release();
 	void Frame();

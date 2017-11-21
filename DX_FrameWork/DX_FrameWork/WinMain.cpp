@@ -17,7 +17,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	{
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
 		{
-			TranslateMessage(&Message);
+			TranslateMessage(&Message);	
 			DispatchMessage(&Message);
 		}
 		else

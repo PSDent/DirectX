@@ -16,10 +16,13 @@ class D3DClass {
 public:
 	D3DClass();
 	~D3DClass();
-	HRESULT InitD3D();
+
+	HRESULT InitD3D(HWND, int, int, float, float, bool, bool);
 	ID3D11Device* GetDevice();
-	ID3D11DeviceContext GetDeviceContext();
+	ID3D11DeviceContext* GetDeviceContext();
 
 
 private:
+	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_deviceContext;
 };

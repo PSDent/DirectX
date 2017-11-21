@@ -5,10 +5,31 @@ CapsuleClass::CapsuleClass() {
 	input = 0;
 }
 
+CapsuleClass::~CapsuleClass() {
+
+}
+
 HRESULT CapsuleClass::InitEngine(HWND hwnd, int width, int height, bool windowMode) {
 	HRESULT hr;
 
+	//================
+	// RenderClass
+	//================
+	render = new RenderClass; 
+	if (render)
+		return E_FAIL;
 
+	render->Init(hwnd, width, height, windowMode, );
+
+	//==================
+	// InputClass
+	//==================
+
+	input = new InputClass;
+	if (input)
+		return E_FAIL;
+
+	input->Init();
 
 	return S_OK;
 }
