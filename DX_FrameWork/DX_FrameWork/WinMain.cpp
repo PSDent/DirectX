@@ -9,6 +9,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	int height = GetSystemMetrics(SM_CYSCREEN);
 
 	InitWindow(hInstance, nCmdShow, width, height);
+
+	capsuleClass = new CapsuleClass;
+	if (!capsuleClass)
+		return 0;
 	capsuleClass->InitEngine(g_hwnd, width, height, WINDOW_MODE);
 
 	MSG Message = { 0 };

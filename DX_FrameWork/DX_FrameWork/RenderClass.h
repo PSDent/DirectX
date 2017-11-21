@@ -12,8 +12,9 @@ const float screenFar = 1000.0f;
 
 class RenderClass {
 public:
-	void Init(HWND, int, int, float, float, bool, bool); 
+	HRESULT Init(HWND, int, int, bool);
 	void Frame();
+	void Release();
 
 	RenderClass();
 	~RenderClass();

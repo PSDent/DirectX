@@ -16,17 +16,17 @@ HRESULT CapsuleClass::InitEngine(HWND hwnd, int width, int height, bool windowMo
 	// RenderClass
 	//================
 	render = new RenderClass; 
-	if (render)
+	if (!render)
 		return E_FAIL;
 
-	render->Init(hwnd, width, height, windowMode, );
+	render->Init(hwnd, width, height, windowMode);
 
 	//==================
 	// InputClass
 	//==================
 
 	input = new InputClass;
-	if (input)
+	if (!input)
 		return E_FAIL;
 
 	input->Init();
@@ -40,6 +40,7 @@ void CapsuleClass::Release() {
 }
 
 void CapsuleClass::Frame() {
+	render->Frame();
 
 	return;
 }
