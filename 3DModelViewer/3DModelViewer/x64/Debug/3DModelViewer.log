@@ -1,0 +1,9 @@
+﻿  ModelParser.cpp
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(16): warning C4101: 'fCnt' :참조되지 않은 지역 변수입니다.
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(16): warning C4101: 'vCnt' :참조되지 않은 지역 변수입니다.
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(15): warning C4101: 'rs' :참조되지 않은 지역 변수입니다.
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(16): warning C4101: 'tCnt' :참조되지 않은 지역 변수입니다.
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(16): warning C4101: 'nCnt' :참조되지 않은 지역 변수입니다.
+c:\users\mnsan\documents\visual studio 2017\projects\3dmodelviewer\3dmodelviewer\modelparser.cpp(17): warning C4101: 'temp' :참조되지 않은 지역 변수입니다.
+  3DModelViewer.vcxproj -> C:\Users\mnsan\documents\visual studio 2017\Projects\3DModelViewer\x64\Debug\3DModelViewer.exe
+  3DModelViewer.vcxproj -> C:\Users\mnsan\documents\visual studio 2017\Projects\3DModelViewer\x64\Debug\3DModelViewer.pdb (Partial PDB)
