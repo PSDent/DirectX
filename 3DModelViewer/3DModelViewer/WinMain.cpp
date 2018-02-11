@@ -16,14 +16,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPWSTR lpCmdLine, 
 	InitWnd(hInstance, nCmdShow, width, height);
 
 	// Load Model File & Parsing obj to my format.
-	/*ModelParser *parser = NULL;
+	/*
+	ModelParser *parser = NULL;
 	parser = new ModelParser;
-	parser->Parsing(g_hWnd);*/
+	parser->Parsing(g_hWnd);
+	*/
 
 	// Initialize DirectX 3D.
 	Engine *engine = NULL;
 	engine = new Engine;
-	engine->InitEngine(g_hWnd, width, height, "..\\3DModelViewer\\cube.txt");
+	engine->InitEngine(g_hWnd, width, height, "C:\\Users\\user\\Desktop\\Model(obj)\\model.txt");
 
 	MSG Message = { 0 };
 	while (WM_QUIT != Message.message) 
@@ -121,6 +123,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 		}
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;

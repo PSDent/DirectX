@@ -5,20 +5,19 @@ Model::Model()
 	m_vertexBuf = 0;
 	m_indexBuf = 0;
 	m_Texture = 0;
-	m_model = 0;
 }
 
 Model::~Model() {}
 
-bool Model::Init(ID3D11Device *device, WCHAR *texPath, char *modelPath)
+bool Model::Init(ID3D11Device *device, char* modelPath, WCHAR *texPath)
 {
 	bool r;
 
 	r = LoadModel(modelPath);
-	if (!r) {
-		MessageBox(NULL, L"Failed to Load Model.", L"Error", MB_OK);
-		return false;
-	}
+		if (!r) {
+			MessageBox(NULL, L"Failed to Load Model.", L"Error", MB_OK);
+			return false;
+		}
 
 	r = InitBuf(device);
 	if (!r) {
@@ -35,20 +34,101 @@ bool Model::Init(ID3D11Device *device, WCHAR *texPath, char *modelPath)
 	return true;
 }
 
+bool Model::InitBuf(ID3D11Device* device)
+{
+	VertexType* vertices;
+	unsigned long* indices;
+	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
+	D3D11_SUBRESOURCE_DATA vertexData, indexData;
+	HRESULT result;
+
+	vertices = new VertexType[m_vertexCount];
+	if (!vertices)
+		return false;
+
+	indices = new unsigned long[m_indexCount];
+	if (!indices)
+		return false;
+
+	////////////////////
+	// Set Model Data
+	for (int i = 0; i < m_vertexCount; i++)
+	{
+		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
+		vertices[i].tex = XMFLOAT2(m_model[i].tu, m_model[i].tv);
+		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
+
+		indices[i] = i;
+	}
+
+	////////////////////////////////
+	// Vertex Buffer Description
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+
+	////////////////////////////////
+	// SubResource : vertexData
+	vertexData.pSysMem = vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
+
+	///////////////////////////////
+	// Create Vertex Buffer
+	result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuf);
+	if (FAILED(result))
+		return false;
+
+	////////////////////////////////
+	// Index Buffer Description
+	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
+	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+	indexBufferDesc.StructureByteStride = 0;
+
+	////////////////////////////////
+	// SubResource : Index
+	indexData.pSysMem = indices;
+	indexData.SysMemPitch = 0;
+	indexData.SysMemSlicePitch = 0;
+
+	///////////////////////////////
+	// Create Index Buffer
+	result = device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuf);
+	if (FAILED(result))
+		return false;
+
+	////////////////////
+	// Release Pointer
+
+	delete[] vertices;
+	delete[] indices;
+
+	return true;
+}
+
 void Model::Release()
 {
-	ReleaseBuf();
 	ReleaseTexture();
+	ReleaseBuf();
 	ReleaseModel();
 
 	return;
 }
 
-void Model::Render(ID3D11DeviceContext* deviceContext)
+
+bool Model::Render(ID3D11DeviceContext* deviceContext)
 {
+	bool rs;
+
 	RenderBuf(deviceContext);
 
-	return;
+	return true;
 }
 
 int Model::GetIndexCount()
@@ -59,75 +139,6 @@ int Model::GetIndexCount()
 ID3D11ShaderResourceView* Model::GetTexture()
 {
 	return m_Texture->GetTexPtr();
-}
-
-bool Model::InitBuf(ID3D11Device* device)
-{
-	VertexType *vertices;
-	unsigned long *indices;
-	D3D11_BUFFER_DESC vertexBufDesc, indexBufDesc;
-	D3D11_SUBRESOURCE_DATA vertexData, indexData;
-	HRESULT hr;
-
-	vertices = new VertexType[m_vertexCount];
-	if (!vertices)
-		return false;
-
-	indices = new unsigned long[m_indexCount];
-	if (!indices)
-		return false;
-
-	///////////////////////////////
-	// Load Vertex Data 
-
-	for (int i = 0; i < m_vertexCount; i++) {
-		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
-		vertices[i].tex = XMFLOAT2(m_model[i].u, m_model[i].v);
-		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
-
-		indices[i] = i;
-	}
-
-	///////////////////////////////
-	// VertexBuffer Description
-
-	vertexBufDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
-	vertexBufDesc.CPUAccessFlags = 0;
-	vertexBufDesc.MiscFlags = 0;
-	vertexBufDesc.StructureByteStride = 0;
-	vertexBufDesc.Usage = D3D11_USAGE_DEFAULT;
-
-	vertexData.pSysMem = vertices;
-	vertexData.SysMemPitch = 0;
-	vertexData.SysMemSlicePitch = 0;
-
-	hr = device->CreateBuffer(&vertexBufDesc, &vertexData, &m_vertexBuf);
-	if (FAILED(hr))
-		return false;
-	
-	/////////////////////////////
-	// IndexBuffer Description
-
-	indexBufDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
-	indexBufDesc.CPUAccessFlags = 0;
-	indexBufDesc.MiscFlags = 0;
-	indexBufDesc.StructureByteStride = 0;
-	indexBufDesc.Usage = D3D11_USAGE_DEFAULT;
-
-	indexData.pSysMem = indices;
-	indexData.SysMemPitch = 0;
-	indexData.SysMemSlicePitch = 0;
-
-	hr = device->CreateBuffer(&indexBufDesc, &indexData, &m_indexBuf);
-	if (FAILED(hr))
-		return false;
-
-	delete vertices;
-	delete indices;
-
-	return true;
 }
 
 void Model::ReleaseBuf()
@@ -160,6 +171,9 @@ bool Model::LoadTexture(ID3D11Device *device, WCHAR *texPath)
 	bool rs;
 
 	m_Texture = new Texture;
+	if (!m_Texture)
+		return false;
+	
 	rs = m_Texture->Init(device, texPath);
 	if (!rs) {
 		MessageBox(NULL, L"Failed to Initialize Texture.", L"Error", MB_OK);
@@ -179,24 +193,22 @@ void Model::ReleaseTexture()
 	return;
 }
 
-bool Model::LoadModel(char* modelPath)
+bool Model::LoadModel(char* filename)
 {
-	ifstream in;
-	char Cin;
+	ifstream fin;
+	char input;
 	int i;
 
-	in.open(modelPath);
+	fin.open(filename);
 
-	if (in.fail()) {
-		MessageBox(NULL, L"Failed to Load Model File.", L"Error", MB_OK);
+	if (fin.fail())
 		return false;
-	}
 
-	in.get(Cin);
-	while (Cin != ':')
-		in.get(Cin);
+	fin.get(input);
+	while (input != ':')
+		fin.get(input);
 
-	in >> m_vertexCount;
+	fin >> m_vertexCount;
 
 	m_indexCount = m_vertexCount;
 
@@ -204,28 +216,33 @@ bool Model::LoadModel(char* modelPath)
 	if (!m_model)
 		return false;
 
-	in.get(Cin);
-	while (Cin != ':')
-		in.get(Cin);
+	fin.get(input);
+	while (input != ':')
+		fin.get(input);
 
-	in.get(Cin);
-	in.get(Cin);
+	fin.get(input);
+	fin.get(input);
 
-	for (int i = 0; i < m_vertexCount; i++) {
-		in >> m_model[i].x >> m_model[i].y >> m_model[i].z;
-		in >> m_model[i].u >> m_model[i].v;
-		in >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+	// Read Vertex Data
+	for (i = 0; i < m_vertexCount; i++) {
+		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
+		fin >> m_model[i].tu >> m_model[i].tv;
+		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
 	}
 
-	in.close();
+	fin.close();
 
 	return true;
 }
 
+
 void Model::ReleaseModel()
 {
-	if (m_model) 
+	if (m_model)
+	{
 		delete[] m_model;
+		m_model = 0;
+	}
 
 	return;
 }

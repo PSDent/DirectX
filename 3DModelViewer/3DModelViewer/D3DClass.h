@@ -7,7 +7,6 @@
 #include <Windows.h>
 #include <D3Dcommon.h>
 #include <d3d11.h>
-#include <d3dx11.h>
 #include <DXGI.h>
 #include <DirectXMath.h>
 
@@ -30,7 +29,6 @@ public:
 	XMMATRIX GetWorld();
 	XMMATRIX GetProj();
 	XMMATRIX GetOrtho();
-
 public:
 
 private:

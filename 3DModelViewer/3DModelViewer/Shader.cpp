@@ -8,6 +8,7 @@ Shader::Shader()
 	m_matrixBuf = 0;
 	m_sampleState = 0;
 	m_lightBuf = 0;
+	m_cameraBuf = 0;
 }
 
 Shader::~Shader() {}
@@ -32,11 +33,13 @@ void Shader::Release()
 }
 
 bool Shader::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projMatrix,
-	ID3D11ShaderResourceView* texture, XMFLOAT3 lightDir, XMFLOAT4 diffuseColor)
+	ID3D11ShaderResourceView* texture, XMFLOAT3 lightDir, XMFLOAT4 diffuseColor, XMFLOAT4 ambientColor,
+	XMFLOAT3 cameraPos, XMFLOAT4 specularColor, float specularPower)
 {
 	bool rs;
 
-	rs = SetShaderParam(deviceContext, worldMatrix, viewMatrix, projMatrix, texture, lightDir, diffuseColor);
+	rs = SetShaderParam(deviceContext, worldMatrix, viewMatrix, projMatrix, texture, 
+		lightDir, ambientColor, diffuseColor, cameraPos, specularColor, specularPower);
 	if (!rs)
 		return false;
 
@@ -55,7 +58,7 @@ bool Shader::InitShader(ID3D11Device* device, HWND hWnd, WCHAR* pathVS, WCHAR* p
 	D3D11_BUFFER_DESC matrixBufDesc;
 	D3D11_SAMPLER_DESC samplerDesc;
 	D3D11_BUFFER_DESC lightBufDesc;
-
+	D3D11_BUFFER_DESC cameraBufDesc;
 
 	/////////////////////////////
 	// Compile the Shader Files
@@ -98,6 +101,7 @@ bool Shader::InitShader(ID3D11Device* device, HWND hWnd, WCHAR* pathVS, WCHAR* p
 	// Input Layout Description
 	// 
 	// It must be same with the VertexType which in the Model Class.
+	//
 
 	//
 	// POSITION
@@ -132,19 +136,7 @@ bool Shader::InitShader(ID3D11Device* device, HWND hWnd, WCHAR* pathVS, WCHAR* p
 	polygonLayout[2].SemanticIndex = 0;
 	polygonLayout[2].SemanticName = "NORMAL";
 
-	/*//
-	// COLOR
-	//
-	polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
-	polygonLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	polygonLayout[1].InputSlot = 0;
-	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[1].InstanceDataStepRate = 0;
-	polygonLayout[1].SemanticIndex = 0;
-	polygonLayout[1].SemanticName = "COLOR";
-	*/
-
-	numElem = sizeof(polygonLayout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+	numElem = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	hr = device->CreateInputLayout(polygonLayout, numElem, vsBuf->GetBufferPointer(), vsBuf->GetBufferSize(), &m_layout);
 	if (FAILED(hr)) {
@@ -207,11 +199,26 @@ bool Shader::InitShader(ID3D11Device* device, HWND hWnd, WCHAR* pathVS, WCHAR* p
 
 	hr = device->CreateBuffer(&lightBufDesc, NULL, &m_lightBuf);
 	if (FAILED(hr)) {
-		MessageBox(NULL, L"Failed to Create Normal Buffer.", L"Error", MB_OK);
+		MessageBox(NULL, L"Failed to Create Light Buffer.", L"Error", MB_OK);
 		return false;
 	}
 
+	/////////////////////////////////////////////
+	// Camera Position Buffer Description
 
+	cameraBufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cameraBufDesc.ByteWidth = sizeof(CameraBufType);
+	cameraBufDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cameraBufDesc.MiscFlags = 0;
+	cameraBufDesc.StructureByteStride = 0;
+	cameraBufDesc.Usage = D3D11_USAGE_DYNAMIC;
+
+	hr = device->CreateBuffer(&cameraBufDesc, NULL, &m_cameraBuf);
+	if (FAILED(hr)) {
+		MessageBox(NULL, L"Failed to Create Camera Buffer.", L"Error", MB_OK);
+		return false;
+	}
+	
 	return true;
 }
 
@@ -223,6 +230,7 @@ void Shader::ReleaseShader()
 	if (m_VS) m_VS->Release();
 	if (m_sampleState) m_sampleState->Release();
 	if (m_lightBuf) m_lightBuf->Release();
+	if (m_cameraBuf) m_cameraBuf->Release();
 
 	return;
 }
@@ -252,12 +260,14 @@ void Shader::OutputShaderErrorMsg(ID3D10Blob *errorMsg, HWND hWnd, WCHAR* shader
 }
 
 bool Shader::SetShaderParam(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projMatrix, 
-	ID3D11ShaderResourceView *texture, XMFLOAT3 lightDir, XMFLOAT4 diffuseColor)
+	ID3D11ShaderResourceView *texture, XMFLOAT3 lightDir, XMFLOAT4 diffuseColor, XMFLOAT4 ambientColor,
+	XMFLOAT3 cameraPos, XMFLOAT4 specularColor, float specularPower)
 {
 	HRESULT hr;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	MatrixBufType *dataPtr;
 	LightBufType *dataPtr2;
+	CameraBufType *dataPtr3;
 	unsigned int bufNum;
 
 	///////////////////////////////
@@ -274,6 +284,9 @@ bool Shader::SetShaderParam(ID3D11DeviceContext* deviceContext, XMMATRIX worldMa
 		return false;
 	}
 
+	////////////////////////////////
+	// Subresource : Matrix Buffer
+
 	//////////
 	// Lock
 	dataPtr = (MatrixBufType*)mappedResource.pData;
@@ -284,7 +297,7 @@ bool Shader::SetShaderParam(ID3D11DeviceContext* deviceContext, XMMATRIX worldMa
 	dataPtr->proj = projMatrix;
 
 	///////////
-	// UnLock
+	// UnLock 
 	deviceContext->Unmap(m_matrixBuf, 0);
 	
 	// Set the Constant Buffer's Position which in the Vertex Shader 
@@ -292,20 +305,25 @@ bool Shader::SetShaderParam(ID3D11DeviceContext* deviceContext, XMMATRIX worldMa
 
 	deviceContext->VSSetConstantBuffers(bufNum, 1, &m_matrixBuf);
 
-	deviceContext->PSSetShaderResources(0, 1, &texture);
+	/////////////////////////////////
+	// Subresource : Light Buffer
 
 	///////////
 	// Lock
 	hr = deviceContext->Map(m_lightBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(hr))
+	if (FAILED(hr)) {
+		MessageBox(NULL, L"Failed to Mapping Lighting Resource.", L"Error", MB_OK);
 		return false;
+	}
 
 	dataPtr2 = (LightBufType*)mappedResource.pData;
 
 	// Copy
+	dataPtr2->ambientColor = ambientColor;
 	dataPtr2->diffuseColor = diffuseColor;
 	dataPtr2->lightDirection = lightDir;
-	dataPtr2->padding = 0;
+	dataPtr2->specularColor = specularColor;
+	dataPtr2->specularPower = specularPower;
 
 	////////////
 	// Unlock
@@ -314,6 +332,31 @@ bool Shader::SetShaderParam(ID3D11DeviceContext* deviceContext, XMMATRIX worldMa
 	bufNum = 0;
 
 	deviceContext->PSSetConstantBuffers(bufNum, 1, &m_lightBuf);
+
+	deviceContext->PSSetShaderResources(0, 1, &texture);
+
+	///////////////////////////////////////////
+	// Subresource : Camera Buffer (position)
+
+	////////
+	// Lock
+	hr = deviceContext->Map(m_cameraBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	if (FAILED(hr))
+		return false;
+
+	dataPtr3 = (CameraBufType*)mappedResource.pData;
+
+	// copy
+	dataPtr3->CameraPos = cameraPos;
+	dataPtr3->padding = 0.0f;
+
+	///////////
+	// Unlock
+	deviceContext->Unmap(m_cameraBuf, 0);
+
+	bufNum = 1;
+
+	deviceContext->VSSetConstantBuffers(bufNum, 1, &m_cameraBuf);
 
 	return true;
 }

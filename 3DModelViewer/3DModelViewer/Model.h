@@ -16,9 +16,10 @@ public:
 		XMFLOAT3 normal;
 	};
 
-	struct ModelType {
+	struct ModelType
+	{
 		float x, y, z;
-		float u, v;
+		float tu, tv;
 		float nx, ny, nz;
 	};
 
@@ -26,15 +27,12 @@ public:
 	Model();
 	~Model();
 
-	bool Init(ID3D11Device*, WCHAR*, char*);
+	bool Init(ID3D11Device*, char*, WCHAR*);
 	void Release();
-	void Render(ID3D11DeviceContext*);
+	bool Render(ID3D11DeviceContext*);
 
 	ID3D11ShaderResourceView* GetTexture();
 	int GetIndexCount();
-
-	bool LoadModel(char*);
-	void ReleaseModel();
 
 private:
 	bool InitBuf(ID3D11Device*);
@@ -44,10 +42,12 @@ private:
 	bool LoadTexture(ID3D11Device*, WCHAR*);
 	void ReleaseTexture();
 
+	bool LoadModel(char*);
+	void ReleaseModel();
+
 private:
 	ID3D11Buffer *m_vertexBuf, *m_indexBuf;
 	int m_vertexCount, m_indexCount;
 	Texture *m_Texture;
-	ModelType *m_model;
-
+	ModelType* m_model;
 };

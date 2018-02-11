@@ -14,6 +14,8 @@ bool Graphic::Init(int width, int height, HWND hWnd, char* modelPath)
 {
 	bool rs;
 
+	////////////
+	// D3D
 	m_D3D = new D3DClass;
 	if (!m_D3D)
 		return false;
@@ -24,21 +26,30 @@ bool Graphic::Init(int width, int height, HWND hWnd, char* modelPath)
 		return false;
 	}
 
+	////////////
+	// Camera
+
 	m_Camera = new Camera;
 	if (!m_Camera)
 		return false;
 
-	m_Camera->SetPos(0.0f, 0.0f, -10.0f);
+	m_Camera->SetPos(0.0f, 0.0f, -400.0f);
+
+	/////////////
+	// Model
 
 	m_Model = new Model;
 	if (!m_Model)
 		return false;
 
-	rs = m_Model->Init(m_D3D->GetDevice(), L"..\\3DModelViewer\\seafloor.dds", modelPath);
+	rs = m_Model->Init(m_D3D->GetDevice(), modelPath, L"..\\3DModelViewer\\seafloor.dds");
 	if (!rs) {
 		MessageBox(NULL, L"Failed to Initialize Model Class.", L"Error", MB_OK);
 		return false;
 	}
+
+	//////////////
+	// Shader
 
 	m_Shader = new Shader;
 	if (!m_Shader)
@@ -50,12 +61,18 @@ bool Graphic::Init(int width, int height, HWND hWnd, char* modelPath)
 		return false;
 	}
 
+	///////////
+	// Light
+
 	m_Light = new Light;
 	if (!m_Light)
 		return false;
 
+	m_Light->SetSpecularPower(16.0f);
+	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
 	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDir(0.0f, 0.0f, 1.0f);
+	m_Light->SetDir(1.0f, 0.0f, 0.0f);
 
 	return true;
 }
@@ -119,7 +136,8 @@ bool Graphic::Render(float rotation)
 	m_Model->Render(m_D3D->GetDeviceContext());
 
 	rs = m_Shader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projMatrix,
-		m_Model->GetTexture(), m_Light->GetDir(), m_Light->GetDiffuseColor());
+		m_Model->GetTexture(), m_Light->GetDir(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(), 
+		m_Camera->GetPos(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
 	if (!rs)
 		return false;
 

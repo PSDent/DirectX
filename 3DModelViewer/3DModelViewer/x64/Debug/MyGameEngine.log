@@ -1,0 +1,29 @@
+﻿  compilation object save succeeded; see D:\Git_Local\My_Direct\3DModelViewer\3DModelViewer\x64\Debug\PS.cso
+  compilation object save succeeded; see D:\Git_Local\My_Direct\3DModelViewer\3DModelViewer\x64\Debug\VS.cso
+  Engine.cpp
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\texture.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX11tex.h': No such file or directory
+  WinMain.cpp
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\texture.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX11tex.h': No such file or directory
+  Model.cpp
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\texture.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX11tex.h': No such file or directory
+  Input.cpp
+  Graphic.cpp
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\texture.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX11tex.h': No such file or directory
+  D3DClass.cpp
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(58): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(153): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [37]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(153): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(163): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [29]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(163): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(169): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [37]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(169): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(196): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [39]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(196): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(229): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [38]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(229): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(249): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [37]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(249): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(272): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 인수 2을(를) 'const wchar_t [36]'에서 'LPCSTR'(으)로 변환할 수 없습니다.
+  d:\git_local\my_direct\3dmodelviewer\3dmodelviewer\d3dclass.cpp(272): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  Camera.cpp
+  코드를 생성하고 있습니다...

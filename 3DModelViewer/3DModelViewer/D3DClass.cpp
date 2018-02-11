@@ -2,12 +2,12 @@
 
 D3DClass::D3DClass()
 {
-	m_driverType			= D3D_DRIVER_TYPE_NULL;
-	m_swapChain				= 0;
-	m_device				= 0;
-	m_deviceContext			= 0;
-	m_renderTargetView		= 0;
-	m_featureLevel			= D3D_FEATURE_LEVEL_11_0;
+	m_driverType				= D3D_DRIVER_TYPE_NULL;
+	m_swapChain					= 0;
+	m_device					= 0;
+	m_deviceContext				= 0;
+	m_renderTargetView			= 0;
+	m_featureLevel				= D3D_FEATURE_LEVEL_11_0;
 }
 
 D3DClass::~D3DClass()
@@ -23,6 +23,7 @@ bool D3DClass::InitD3D(HWND hWnd, int width, int height, bool vsync, bool window
 	IDXGIOutput* output;
 	unsigned int numModes, numerator, denominator;
 	DXGI_MODE_DESC* displayModeList;
+	D3D11_DEPTH_STENCIL_DESC depthDisableStencilDesc;
 
 	m_vsync = vsync;
 
@@ -296,10 +297,6 @@ bool D3DClass::InitD3D(HWND hWnd, int width, int height, bool vsync, bool window
 
 	// Identity Matrix
 	m_worldMatrix = XMMatrixIdentity();
-
-	// Create Ortho Matrix to use at 2D Rendering.
-	m_orthoMatrix = XMMatrixOrthographicLH(width, height, Near, Far);
-
 
 	return true;
 }	
