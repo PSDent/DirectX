@@ -16,81 +16,141 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{50102b32-0d51-4cbf-90ea-7acb58171539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object">
+    <Filter Include="헤더 파일\Engine">
+      <UniqueIdentifier>{67ae226a-ea0c-46b2-8def-7e27492a00b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine">
+      <UniqueIdentifier>{b4d8a356-b982-4b26-862f-8a54b9f455ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Engine\Timer">
+      <UniqueIdentifier>{a652684d-1fe3-467f-95cf-68f76a3a5776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Engine\Graphic">
+      <UniqueIdentifier>{fe40079f-0799-4736-be6e-b81f731c81da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Engine\Object">
+      <UniqueIdentifier>{0f606ed4-d658-4a34-8389-d458ab8f82d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Graphic">
+      <UniqueIdentifier>{1f6f2fb0-53c5-4678-a52c-a66a01d6e766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Timer">
+      <UniqueIdentifier>{7a5f741a-1070-4f71-aac7-b9c4ee6865c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Object">
       <UniqueIdentifier>{80303732-40e9-4181-b0f7-0ef248fa5930}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Object">
-      <UniqueIdentifier>{0f606ed4-d658-4a34-8389-d458ab8f82d7}</UniqueIdentifier>
+    <Filter Include="헤더 파일\Engine\Object\Sprite">
+      <UniqueIdentifier>{6ce4d209-8661-4fc4-b57e-54cb0723ec9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Object\Sprite">
+      <UniqueIdentifier>{6931c716-1902-44b2-8e71-1b21a706f54c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphic.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="D2D.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>소스 파일\Object</Filter>
+      <Filter>소스 파일\Engine\Object</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>소스 파일\Object</Filter>
+      <Filter>소스 파일\Engine\Object</Filter>
     </ClCompile>
     <ClCompile Include="Audio.cpp">
-      <Filter>소스 파일\Object</Filter>
+      <Filter>소스 파일\Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\Engine\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="D2D.cpp">
+      <Filter>소스 파일\Engine\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>소스 파일\Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic.cpp">
+      <Filter>소스 파일\Engine\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>소스 파일\Engine\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>소스 파일\Engine\Object\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일\Object</Filter>
+      <Filter>소스 파일\Engine\Object\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h">
+      <Filter>헤더 파일\Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>헤더 파일\Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>헤더 파일\Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>헤더 파일\Engine\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="D2D.h">
+      <Filter>헤더 파일\Engine\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>헤더 파일\Engine\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>헤더 파일\Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>헤더 파일\Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>헤더 파일\Engine\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="WinMain.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="GameManager.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="D2D.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>헤더 파일\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>헤더 파일\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>헤더 파일\Object</Filter>
+    <ClInclude Include="Sound.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>헤더 파일\Object</Filter>
+      <Filter>헤더 파일\Engine\Object\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>헤더 파일\Engine\Object\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>헤더 파일\Engine\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

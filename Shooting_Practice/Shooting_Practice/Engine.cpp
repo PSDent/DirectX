@@ -31,7 +31,7 @@ void Engine::Init(HWND hWnd, int width, int height)
 
 void Engine::Run()
 {
-	graphic->Frame();
+	graphic->Frame(obj);
 
 
 
@@ -47,4 +47,18 @@ void Engine::Release()
 LRESULT Engine::InputProcess(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	return input->MsgHandle(hWnd, msg, wParam, lParam);
+}
+
+bool Engine::IsWin() {
+
+	return true;
+}
+
+void Engine::CreateObject()
+{
+	for (int i = 0; i < MAX_ENERMY; i++) {
+		Obejc
+	}
+
+	return;
 }

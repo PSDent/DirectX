@@ -1,6 +1,9 @@
 #pragma once
+#include <vector>
 #include "D2D.h"
 #include "Shader.h"
+#include "Camera.h"
+#include "Object.h"
 
 ///////////////////
 // CONSTANT 
@@ -15,12 +18,15 @@ public:
 	Graphic();
 	~Graphic();
 	
-	void Init(HWND, int, int);
-	void Frame();
+	bool Init(HWND, int, int);
+	bool Frame(vector<Object>&);
 	void Release();
+	ID3D11Device* GetDevice();
 
 private:
 	D2D *d2d;
 	Shader *shader;
+	Camera *camera;
+
 };
 

@@ -3,6 +3,9 @@
 
 Graphic::Graphic()
 {
+	d2d = NULL;
+	camera = NULL;
+	shader = NULL;
 }
 
 
@@ -10,28 +13,67 @@ Graphic::~Graphic()
 {
 }
 
-void Graphic::Init(HWND hWnd, int width, int height)
+bool Graphic::Init(HWND hWnd, int width, int height)
 {
+	bool rs;
+
 	d2d = new D2D;
 	if (!d2d)
-		return;
+		return false;
 
-	d2d->Init(hWnd, width, height, VSYNC, WINDOW_MODE, SCR_NEAR, SCR_FAR);
+	rs = d2d->Init(hWnd, width, height, VSYNC, WINDOW_MODE, SCR_NEAR, SCR_FAR);
+	if (!rs)
+		return false;
+
+	camera = new Camera;
+	if (!camera)
+		return false;
+	camera->SetPos(0.0f, 0.0f, 0.0f);
+	camera->SetRot(0.0f, 0.0f, 0.0f);
 
 	shader = new Shader;
 	if (!shader)
-		return;
+		return false;
 
-	shader->Init(d2d->GetDevice(), hWnd);
+	rs = shader->Init(d2d->GetDevice(), hWnd);
+	if (!rs)
+		return false;
 
-	return;
+	return true;
 }
 
-void Graphic::Frame()
+bool Graphic::Frame(vector<Object> &obj)
 {
+	XMMATRIX worldMatrix, viewMatrix, projMatrix, orthoMatrix;
+	bool rs;
+	
+	// Start Rendering
+	d2d->Start();
 
+	camera->Render();
 
-	return;
+	viewMatrix = camera->GetViewMatrix();
+	worldMatrix = d2d->GetWorld();
+	projMatrix = d2d->GetProj();
+	orthoMatrix = d2d->GetOrtho();
+
+	for (int i = 0; i < obj.size(); i++) {
+		// Input the Object's Vertex data to Shader to Rendering. 
+		rs = obj[i].GetSprite().Render(d2d->GetDeviceContext(), obj[i].GetPosX(), obj[i].GetPosY());
+		if (!rs)
+			return false;
+
+		rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
+			worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
+		if (!rs)
+			return false;
+
+	}
+
+	// End the Rendering 
+	d2d->End();
+
+	return true;
 }
 
 void Graphic::Release()
@@ -46,5 +88,14 @@ void Graphic::Release()
 		delete shader;
 	}
 
+	if (camera) {
+		delete camera;
+	}
+
 	return;
+}
+
+ID3D11Device* Graphic::GetDevice()
+{
+	return d2d->GetDevice();
 }

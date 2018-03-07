@@ -1,0 +1,6 @@
+class GameManager {
+public:
+
+private:
+
+};
