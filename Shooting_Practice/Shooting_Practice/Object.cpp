@@ -27,5 +27,10 @@ bool Object::InitObject(ID3D11Device* device)
 	// Initialize Sprite.
 	//sprite->Init(device,);
 
+	// Initialize Animation
+
+	// Initialize Sound 
+
+
 	return true;
 }

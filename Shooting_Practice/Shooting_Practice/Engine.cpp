@@ -57,7 +57,8 @@ bool Engine::IsWin() {
 void Engine::CreateObject()
 {
 	for (int i = 0; i < MAX_ENERMY; i++) {
-		Obejc
+		//Obejc
+		//obj[i].
 	}
 
 	return;

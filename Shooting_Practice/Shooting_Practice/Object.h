@@ -10,9 +10,8 @@ public:
 	Object();
 	~Object();
 
-	void Init();
+	//void Init();
 	bool InitObject(ID3D11Device*);
-
 
 	int GetPrevPosX();
 	int GetPrevPosY();
