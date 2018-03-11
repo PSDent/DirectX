@@ -41,7 +41,7 @@ private:
 	Texture *m_Texture;
 
 	// sprite's information to draw 2D image
-	int m_scrW, m_scrH;
+	int m_scrX, m_scrY;
 	int m_spriteW, m_spriteH;
 	int m_prevX, m_prevY;
 

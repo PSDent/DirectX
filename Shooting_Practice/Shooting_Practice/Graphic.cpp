@@ -17,6 +17,9 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 {
 	bool rs;
 
+	////////////////
+	// Direct 2D 
+	////////////////
 	d2d = new D2D;
 	if (!d2d)
 		return false;
@@ -25,11 +28,19 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	if (!rs)
 		return false;
 
+	/////////////////
+	// Camera
+	////////////////
+
 	camera = new Camera;
 	if (!camera)
 		return false;
 	camera->SetPos(0.0f, 0.0f, 0.0f);
 	camera->SetRot(0.0f, 0.0f, 0.0f);
+
+	/////////////
+	// Shader
+	/////////////
 
 	shader = new Shader;
 	if (!shader)
@@ -67,7 +78,6 @@ bool Graphic::Frame(vector<Object> &obj)
 			worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
 		if (!rs)
 			return false;
-
 	}
 
 	// End the Rendering 

@@ -11,27 +11,22 @@ public:
 	~Object();
 
 	//void Init();
-	bool InitObject(ID3D11Device*);
+	bool InitObject(ID3D11Device*, int, int, int, int, WCHAR*);
 
 	int GetPrevPosX();
 	int GetPrevPosY();
 	int GetWidth();
 	int GetHeight();
 
-	float GetPosX() {
-		return this->posX;
-	}
-
-	float GetPosY() {
-		return this->posY;
-	}
+	float GetPosX();
+	float GetPosY();
 
 	Sprite& GetSprite();
 	Animation& GetAnime();
 	Audio& GetAudio();
 
 private:
-	// Object Value 
+	// Object basic Value 
 	float hp, mp;
 	float speed;
 	float fireRapidity;
@@ -42,7 +37,6 @@ private:
 	// Components
 	Sprite *sprite;
 	vector<Object> projectile;
-
 	Animation *animation;
 	Audio *audio;
 

@@ -9,12 +9,12 @@ Sprite::Sprite()
 
 Sprite::~Sprite() {}
 
-bool Sprite::Init(ID3D11Device *device, int scrW, int scrH, int spriteW, int spriteH, WCHAR *texPath)
+bool Sprite::Init(ID3D11Device *device, int scrX, int scrW, int spriteW, int spriteH, WCHAR *texPath)
 {
 	bool r;
 
-	m_scrW = scrW;
-	m_scrH = scrH;
+	m_scrX = scrX;
+	m_scrY = scrW;
 
 	m_spriteW = spriteW;
 	m_spriteH = spriteH;
@@ -204,9 +204,9 @@ bool Sprite::UpdateBuf(ID3D11DeviceContext* deviceContext, int posX, int posY)
 	m_prevX = posX;
 	m_prevY = posY;
 
-	left = (float)((m_scrW / 2) * -1) + (float)posX;
+	left = (float)((m_scrX / 2) * -1) + (float)posX;
 	right = left + (float)m_spriteW;
-	top = (float)(m_scrH / 2) - (float)posY;
+	top = (float)(m_scrY / 2) - (float)posY;
 	bot = top - (float)m_spriteH;
 
 	vertices = new VertexType[m_vertexCount];

@@ -31,10 +31,10 @@ void Engine::Init(HWND hWnd, int width, int height)
 
 void Engine::Run()
 {
-	graphic->Frame(obj);
+	graphic->Frame(plane);
 
 
-
+	 
 	return;
 }
 

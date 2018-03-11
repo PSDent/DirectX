@@ -41,8 +41,8 @@ int InitWnd(HINSTANCE hInstance, int nCmdShow)
 	WNDCLASSEX wndEx;
 	int xpos, ypos;
 
-	g_width = 1280;
-	g_height = 800;
+	g_width = 1024;
+	g_height = 768;
 
 	xpos = (GetSystemMetrics(SM_CXSCREEN) - g_width) / 2;
 	ypos = (GetSystemMetrics(SM_CYSCREEN) - g_height) / 2;

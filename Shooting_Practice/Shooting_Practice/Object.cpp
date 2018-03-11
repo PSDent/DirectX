@@ -4,11 +4,25 @@
 
 Object::Object()
 {
+	sprite = NULL;
+	animation = NULL;
+	audio = NULL;
 }
 
 
 Object::~Object()
 {
+}
+
+float Object::GetPosX()
+{
+	return this->posX;
+}
+
+
+float Object::GetPosY()
+{
+	return this->posY;
 }
 
 Sprite& Object::GetSprite() {
@@ -18,14 +32,15 @@ Sprite& Object::GetSprite() {
 Animation& Object::GetAnime() {
 	return *animation;
 }
+
 Audio& Object::GetAudio() {
 	return *audio;
 }
 
-bool Object::InitObject(ID3D11Device* device)
+bool Object::InitObject(ID3D11Device* device, int posX, int posY, int width, int height, WCHAR *texPath)
 {
 	// Initialize Sprite.
-	//sprite->Init(device,);
+	sprite->Init(device, posX, posY, width, height, texPath);
 
 	// Initialize Animation
 

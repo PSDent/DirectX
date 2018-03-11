@@ -28,9 +28,10 @@ private:
 	Graphic *graphic;
 	Input *input;
 
+	vector<Object> backGround;
 	// obj[0] is Player. 
 	// Another objects are Enermy.
-	vector<Object> obj; 
+	vector<Object> plane; 
 	HWND hWnd;
 
 };
