@@ -21,8 +21,10 @@ public:
 	void Init(HWND, int, int);
 	void Run();
 	void Release();
-	void CreateObject();
 	LRESULT InputProcess(HWND, UINT, WPARAM, LPARAM);
+
+private:
+	void CreateObject();
 
 private:
 	Graphic *graphic;

@@ -39,8 +39,18 @@ Audio& Object::GetAudio() {
 
 bool Object::InitObject(ID3D11Device* device, int posX, int posY, int width, int height, WCHAR *texPath)
 {
+	bool rs;
+
+	this->posX = posX;
+	this->posY = posY;
 	// Initialize Sprite.
-	sprite->Init(device, posX, posY, width, height, texPath);
+	sprite = new Sprite;
+	rs = sprite->Init(device, this->posX, this->posY, width, height, texPath);
+	if (!rs) {
+		MessageBox(NULL, L"Failed to Initialize Sprite.", L"Error", MB_OK);
+		return false;
+	}
+	
 
 	// Initialize Animation
 

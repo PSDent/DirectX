@@ -35,7 +35,9 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	camera = new Camera;
 	if (!camera)
 		return false;
-	camera->SetPos(0.0f, 0.0f, 0.0f);
+	
+	// Camera z값 주의하시길.. 무조건 0 미만이여야함. 
+	camera->SetPos(0.0f, 0.0f, -10.0f);
 	camera->SetRot(0.0f, 0.0f, 0.0f);
 
 	/////////////

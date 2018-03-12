@@ -17,6 +17,7 @@ public:
 	int GetPrevPosY();
 	int GetWidth();
 	int GetHeight();
+	void Render();
 
 	float GetPosX();
 	float GetPosY();

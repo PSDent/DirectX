@@ -26,6 +26,8 @@ void Engine::Init(HWND hWnd, int width, int height)
 	if (!input)
 		return;
 
+	CreateObject();
+
 	return;
 }
 
@@ -33,8 +35,6 @@ void Engine::Run()
 {
 	graphic->Frame(plane);
 
-
-	 
 	return;
 }
 
@@ -56,10 +56,11 @@ bool Engine::IsWin() {
 
 void Engine::CreateObject()
 {
-	for (int i = 0; i < MAX_ENERMY; i++) {
-		//Obejc
-		//obj[i].
-	}
+	//for (int i = 0; i < MAX_ENERMY; i++) {
+	Object temp;
+	temp.InitObject(graphic->GetDevice(), 100, 100, 50, 50, L"C:\\Users\\user\\Downloads\\SpaceShooterRedux\\PNG\\playerShip1_blue.png");
+	plane.push_back(temp);
+	//}
 
 	return;
 }
