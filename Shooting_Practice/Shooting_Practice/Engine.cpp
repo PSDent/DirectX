@@ -33,7 +33,7 @@ void Engine::Init(HWND hWnd, int width, int height)
 
 void Engine::Run()
 {
-	graphic->Frame(plane);
+	graphic->Frame(plane, backGround);
 
 	return;
 }
@@ -56,10 +56,27 @@ bool Engine::IsWin() {
 
 void Engine::CreateObject()
 {
+	// 0 ~ 800 ¿Œ∞‘¿” 801~1024 UI 
+	// 1024 x 768
 	//for (int i = 0; i < MAX_ENERMY; i++) {
-	Object temp;
-	temp.InitObject(graphic->GetDevice(), 100, 100, 50, 50, L"C:\\Users\\user\\Downloads\\SpaceShooterRedux\\PNG\\playerShip1_blue.png");
-	plane.push_back(temp);
+
+	//for (int i = 0; i < MAX_BACKGROUND; i++) {
+	Object temp_player;
+	temp_player.InitObject(graphic->GetDevice(), 512.0f * 2.0f, 700.0f * 2.0f, 50.0f, 50.0f, 3.0f, "PLAYER", Player);
+	plane.push_back(temp_player);
+
+	for (int i = 1; i <= MAX_ENERMY; i++) {
+		Object temp;
+		temp.InitObject(graphic->GetDevice(), (0.0f + i) * 200.0f, 0.0f, 50.0f, 50.0f, 3.0f, "ENERMY", Enermy_1);
+		plane.push_back(temp);
+	}
+
+	for (int i = 0; i <= MAX_BACKGROUND; i++) {
+		Object temp_back;
+		temp_back.InitObject(graphic->GetDevice(), 0.0f, 0.0f, 700.0f, 768.0f, 0.0f, "BACKGROUND", Background_Space);
+		backGround.push_back(temp_back);
+	}
+
 	//}
 
 	return;

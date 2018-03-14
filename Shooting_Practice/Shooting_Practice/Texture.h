@@ -8,7 +8,7 @@ public:
 	Texture();
 	~Texture();
 
-	bool Init(ID3D11Device*, WCHAR*);
+	bool Init(ID3D11Device*, const WCHAR*);
 	void Release();
 
 	ID3D11ShaderResourceView* GetTexPtr();

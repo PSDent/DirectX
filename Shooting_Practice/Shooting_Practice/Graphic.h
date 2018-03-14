@@ -19,9 +19,12 @@ public:
 	~Graphic();
 	
 	bool Init(HWND, int, int);
-	bool Frame(vector<Object>&);
+	bool Frame(vector<Object>&, vector<Object>&);
 	void Release();
 	ID3D11Device* GetDevice();
+
+private:
+	void ObjectRender(vector<Object> &obj, XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:
 	D2D *d2d;

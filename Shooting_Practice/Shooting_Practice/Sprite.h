@@ -19,12 +19,13 @@ public:
 	Sprite();
 	~Sprite();
 
-	bool Init(ID3D11Device*, int, int, int, int, WCHAR*);
+	bool Init(ID3D11Device*, int, int, int, int, const WCHAR*);
 	void Release();
 	bool Render(ID3D11DeviceContext*, int, int);
 
 	ID3D11ShaderResourceView* GetTexture();
 	int GetIndexCount();
+	void Rotate(float);
 
 private:
 	bool InitBuf(ID3D11Device*);
@@ -32,7 +33,7 @@ private:
 	void RenderBuf(ID3D11DeviceContext*);
 	bool UpdateBuf(ID3D11DeviceContext*, int, int);
 
-	bool LoadTexture(ID3D11Device*, WCHAR*);
+	bool LoadTexture(ID3D11Device*, const WCHAR*);
 	void ReleaseTexture();
 
 private:

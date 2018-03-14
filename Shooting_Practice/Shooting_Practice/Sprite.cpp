@@ -9,7 +9,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite() {}
 
-bool Sprite::Init(ID3D11Device *device, int scrX, int scrW, int spriteW, int spriteH, WCHAR *texPath)
+bool Sprite::Init(ID3D11Device *device, int scrX, int scrW, int spriteW, int spriteH, const WCHAR *texPath)
 {
 	bool r;
 
@@ -115,6 +115,13 @@ void Sprite::Release()
 }
 
 
+void Rotate()
+{
+	//XMMATIR
+
+	return;
+}
+
 bool Sprite::Render(ID3D11DeviceContext* deviceContext, int posX, int posY)
 {
 	bool rs;
@@ -163,7 +170,7 @@ void Sprite::RenderBuf(ID3D11DeviceContext* deviceContext)
 	return;
 }
 
-bool Sprite::LoadTexture(ID3D11Device *device, WCHAR *texPath)
+bool Sprite::LoadTexture(ID3D11Device *device, const WCHAR *texPath)
 {
 	bool rs;
 

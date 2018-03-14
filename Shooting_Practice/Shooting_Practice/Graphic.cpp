@@ -37,7 +37,9 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 		return false;
 	
 	// Camera z값 주의하시길.. 무조건 0 미만이여야함. 
-	camera->SetPos(0.0f, 0.0f, -10.0f);
+	// 안 그러면 카메라의 z축과 스프라이트의 z축이 너무 가까워서 안보이거나 문제 발생
+	// 카메라의 좌상단 좌표를 0, 0 으로 맞춘다.
+	camera->SetPos(width / 2.0f, height / 2.0f * -1.0f, -10.0f);
 	camera->SetRot(0.0f, 0.0f, 0.0f);
 
 	/////////////
@@ -55,7 +57,7 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	return true;
 }
 
-bool Graphic::Frame(vector<Object> &obj)
+bool Graphic::Frame(vector<Object> &obj, vector<Object> &background)
 {
 	XMMATRIX worldMatrix, viewMatrix, projMatrix, orthoMatrix;
 	bool rs;
@@ -70,22 +72,37 @@ bool Graphic::Frame(vector<Object> &obj)
 	projMatrix = d2d->GetProj();
 	orthoMatrix = d2d->GetOrtho();
 
-	for (int i = 0; i < obj.size(); i++) {
-		// Input the Object's Vertex data to Shader to Rendering. 
-		rs = obj[i].GetSprite().Render(d2d->GetDeviceContext(), obj[i].GetPosX(), obj[i].GetPosY());
-		if (!rs)
-			return false;
-
-		rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
-			worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
-		if (!rs)
-			return false;
-	}
+	ObjectRender(background, worldMatrix, viewMatrix, orthoMatrix);
+	ObjectRender(obj, worldMatrix, viewMatrix, orthoMatrix);
 
 	// End the Rendering 
 	d2d->End();
 
 	return true;
+}
+
+void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix)
+{
+	bool rs;
+
+	// 1PI = 180'
+	// Matrix Rotation은 radian값을 사용함. 
+	//worldMatrix = XMMatrixRotationZ(XM_PI);
+
+	for (int i = 0; i < obj.size(); i++) {
+		obj[i].Movement();
+		// Input the Object's Vertex data to Shader to Rendering. 
+		obj[i].Render(d2d->GetDeviceContext());
+
+		rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
+			worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
+		if (!rs) {
+			MessageBox(NULL, L"Failed to Rendering Shader.", L"Error", MB_OK);
+			return;
+		}
+	}
+
+	return;
 }
 
 void Graphic::Release()

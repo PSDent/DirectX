@@ -4,9 +4,9 @@ class Collider
 {
 public:
 	Collider();
-	~Collider();
+	virtual ~Collider();
 
 private:
-	float width;
-	float height;
+	float posX;
+	float posY;
 };

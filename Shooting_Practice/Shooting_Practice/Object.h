@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Sprite.h"
 #include "Animation.h"
 #include "Audio.h"
@@ -11,14 +12,25 @@ public:
 	~Object();
 
 	//void Init();
-	bool InitObject(ID3D11Device*, int, int, int, int, WCHAR*);
+	bool InitObject(ID3D11Device*, float, float, float, float, float, const string, const WCHAR*);
 
+	// Setter
+	void SetSpeed(float);
+	void SetVertical(float);
+	void SetHorizontal(float);
+	void SetPivotX(float);
+	void SetPivotY(float);
+	void SetPosX(float);
+	void SetPosY(float);
+	void SetTag(string tag);
+	void Movement();
+	void Render(ID3D11DeviceContext*);
+
+	// Getter
 	int GetPrevPosX();
 	int GetPrevPosY();
 	int GetWidth();
 	int GetHeight();
-	void Render();
-
 	float GetPosX();
 	float GetPosY();
 
@@ -27,6 +39,16 @@ public:
 	Audio& GetAudio();
 
 private:
+	void MoveVertical();
+	void MoveHorizon();
+
+private:
+	string tag;
+	float pivotX, pivotY;
+	// to decide object's direction. 
+	float vertical;   // + down, - up
+	float horizontal; // + right, - left
+
 	// Object basic Value 
 	float hp, mp;
 	float speed;
@@ -34,6 +56,7 @@ private:
 	float damage;
 	float range;
 	float posX, posY;
+	float score;
 
 	// Components
 	Sprite *sprite;

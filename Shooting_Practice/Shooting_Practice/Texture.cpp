@@ -7,7 +7,7 @@ Texture::Texture()
 
 Texture::~Texture() {}
 
-bool Texture::Init(ID3D11Device* device, WCHAR* texPath)
+bool Texture::Init(ID3D11Device* device, const WCHAR* texPath)
 {
 	HRESULT hr;
 

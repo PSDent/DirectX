@@ -46,6 +46,12 @@
     <Filter Include="소스 파일\Engine\Object\Sprite">
       <UniqueIdentifier>{6931c716-1902-44b2-8e71-1b21a706f54c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Engine\Object\Collider">
+      <UniqueIdentifier>{bc7e5f5d-fc86-4fce-9b2f-833fa8addab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Object\Collider">
+      <UniqueIdentifier>{3d540e14-8cb3-4e09-9c4c-f06e07ccaa98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -90,14 +96,14 @@
     <ClCompile Include="Sound.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일\Engine\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>소스 파일\Engine\Object\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>소스 파일\Engine\Object\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\Engine\Object\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +156,7 @@
       <Filter>헤더 파일\Engine\Object\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>헤더 파일\Engine\Object</Filter>
+      <Filter>헤더 파일\Engine\Object\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
