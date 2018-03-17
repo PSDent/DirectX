@@ -7,38 +7,39 @@
 // Main of Window.
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPWSTR lpCmdLine, int nCmdShow)
 {
+	Engine *engine = NULL;
+	bool rs;
+
 	// initialize Window & Create Window.
-	InitWnd(hInstance, nCmdShow);
+	rs = InitWnd(hInstance, nCmdShow);
+	if (!rs) {
+		MessageBox(NULL, L"Failed to initialize Window.", L"Error", MB_OK);
+		return 0;
+	}
 
 	engine = new Engine;
-	if (!engine)
+	if (!engine) 
 		return 0;
-	engine->Init(g_hWnd, g_width, g_height);
+
+	rs = engine->Init(hInstance, g_hWnd, g_width, g_height);
+	if (!rs) {
+		MessageBox(NULL, L"Failed to initialize Engine.", L"Error", MB_OK);
+		return 0;
+	}
 	Initialized = true;
 
-	MSG Message = { 0 };
-	// Game Loop
-	while (WM_QUIT != Message.message)
-	{
-		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&Message);
-			DispatchMessage(&Message);
-		}
-		else {
-			engine->Run();
-		}
-	}
+	engine->Run();
 
 	engine->Release();
 
-	return (int)Message.wParam;
+	return 0;
 }
 
 ////////////////////////////////////
 // Initialize Window Class and Create.
-int InitWnd(HINSTANCE hInstance, int nCmdShow)
+bool InitWnd(HINSTANCE hInstance, int nCmdShow)
 {
-	WNDCLASSEX wndEx;
+	WNDCLASSEX wndEx = {};
 	int xpos, ypos;
 
 	g_width = 1024;
@@ -81,15 +82,12 @@ int InitWnd(HINSTANCE hInstance, int nCmdShow)
 
 	ShowWindow(g_hWnd, nCmdShow);
 
-	return S_OK;
+	return true;
 }
 
 ////////////////////////////////////
 // Window Procedure
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	if(Initialized)
-		return engine->InputProcess(hWnd, iMessage, wParam, lParam);
-	else
-		return DefWindowProc(hWnd, iMessage, wParam, lParam);
+	return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }

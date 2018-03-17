@@ -14,9 +14,8 @@
 // GLOBAL 
 ////////////////////////
 HINSTANCE		g_hInst = NULL;
-HWND			g_hWnd = NULL;
+static HWND			g_hWnd = NULL;
 LPCTSTR			g_title = TEXT("Shooting Game Practice");
-Engine			*engine = NULL;
 
 int g_width;
 int g_height;
@@ -32,7 +31,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int);
 
 ////////////////////////////////////
 // Initialize Window Class and Create.
-int InitWnd(HINSTANCE, int);
+bool InitWnd(HINSTANCE, int);
 
 ////////////////////////////////////
 // Window Procedure

@@ -9,6 +9,7 @@
 
 ///////////////////
 // System Value
+const float SPEED = 12.0f;
 const int MAX_ENERMY = 5;
 const int MAX_BACKGROUND = 2;
 
@@ -27,8 +28,9 @@ public:
 	~Engine();
 
 	bool IsWin();
-	void Init(HWND, int, int);
+	bool Init(HINSTANCE, HWND, int, int);
 	void Run();
+	bool Frame();
 	void Release();
 	LRESULT InputProcess(HWND, UINT, WPARAM, LPARAM);
 
@@ -37,6 +39,9 @@ private:
 
 private:
 	int screenW, screenH;
+	bool done;
+	HINSTANCE hInstance;
+
 	Graphic *graphic;
 	Input *input;
 
