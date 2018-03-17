@@ -19,7 +19,7 @@ public:
 	Sprite();
 	~Sprite();
 
-	bool Init(ID3D11Device*, int, int, int, int, const WCHAR*);
+	bool Init(ID3D11Device*, int, int, int, int, int, int, const WCHAR*);
 	void Release();
 	bool Render(ID3D11DeviceContext*, int, int);
 
@@ -45,5 +45,6 @@ private:
 	int m_scrX, m_scrY;
 	int m_spriteW, m_spriteH;
 	int m_prevX, m_prevY;
+	int m_screenW, m_screenH;
 
 };

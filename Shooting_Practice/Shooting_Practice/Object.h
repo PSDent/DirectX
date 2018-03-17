@@ -12,7 +12,8 @@ public:
 	~Object();
 
 	//void Init();
-	bool InitObject(ID3D11Device*, float, float, float, float, float, const string, const WCHAR*);
+	bool InitObject(ID3D11Device*, float, float, float, float, float, int, int, const string, const WCHAR*);
+	void ResetPosition();
 
 	// Setter
 	void SetSpeed(float);
@@ -27,6 +28,7 @@ public:
 	void Render(ID3D11DeviceContext*);
 
 	// Getter
+	string GetTag();
 	int GetPrevPosX();
 	int GetPrevPosY();
 	int GetWidth();

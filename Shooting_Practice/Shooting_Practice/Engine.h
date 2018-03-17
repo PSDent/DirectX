@@ -36,6 +36,7 @@ private:
 	void CreateObject();
 
 private:
+	int screenW, screenH;
 	Graphic *graphic;
 	Input *input;
 

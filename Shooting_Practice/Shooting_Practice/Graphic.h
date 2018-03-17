@@ -3,6 +3,7 @@
 #include "D2D.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Timer.h"
 #include "Object.h"
 
 ///////////////////
@@ -19,8 +20,9 @@ public:
 	~Graphic();
 	
 	bool Init(HWND, int, int);
-	bool Frame(vector<Object>&, vector<Object>&);
+	bool Frame(vector<Object>&, vector<Object>&, HWND);
 	void Release();
+	void DisplayFps(HWND, int);
 	ID3D11Device* GetDevice();
 
 private:
@@ -30,6 +32,7 @@ private:
 	D2D *d2d;
 	Shader *shader;
 	Camera *camera;
+	Timer *timer;
 
 };
 

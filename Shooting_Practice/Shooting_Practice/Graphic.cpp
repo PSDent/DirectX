@@ -17,6 +17,11 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 {
 	bool rs;
 
+	timer = new Timer;
+	rs = timer->Init();
+	if (!rs)
+		return false;
+
 	////////////////
 	// Direct 2D 
 	////////////////
@@ -35,11 +40,11 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	camera = new Camera;
 	if (!camera)
 		return false;
-	
+
 	// Camera z값 주의하시길.. 무조건 0 미만이여야함. 
 	// 안 그러면 카메라의 z축과 스프라이트의 z축이 너무 가까워서 안보이거나 문제 발생
 	// 카메라의 좌상단 좌표를 0, 0 으로 맞춘다.
-	camera->SetPos(width / 2.0f, height / 2.0f * -1.0f, -10.0f);
+	camera->SetPos(130.0f, height / 2.0f * -1.0f, -10.0f);
 	camera->SetRot(0.0f, 0.0f, 0.0f);
 
 	/////////////
@@ -57,11 +62,15 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	return true;
 }
 
-bool Graphic::Frame(vector<Object> &obj, vector<Object> &background)
+bool Graphic::Frame(vector<Object> &obj, vector<Object> &background, HWND hWnd)
 {
 	XMMATRIX worldMatrix, viewMatrix, projMatrix, orthoMatrix;
 	bool rs;
-	
+
+	timer->Frame();
+	DisplayFps(hWnd, timer->GetFps());
+
+
 	// Start Rendering
 	d2d->Start();
 
@@ -90,7 +99,10 @@ void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX v
 	//worldMatrix = XMMatrixRotationZ(XM_PI);
 
 	for (int i = 0; i < obj.size(); i++) {
+
 		obj[i].Movement();
+		obj[i].ResetPosition();
+
 		// Input the Object's Vertex data to Shader to Rendering. 
 		obj[i].Render(d2d->GetDeviceContext());
 
@@ -127,4 +139,13 @@ void Graphic::Release()
 ID3D11Device* Graphic::GetDevice()
 {
 	return d2d->GetDevice();
+}
+
+void Graphic::DisplayFps(HWND hWnd, int fps)
+{
+	TCHAR strFps[15];
+	swprintf_s(strFps, L"FPS : %d", fps);
+	SetWindowText(hWnd, strFps);
+
+	return;
 }

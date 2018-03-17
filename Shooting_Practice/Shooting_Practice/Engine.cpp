@@ -17,6 +17,9 @@ void Engine::Init(HWND hWnd, int width, int height)
 {
 	this->hWnd = hWnd;
 
+	this->screenW = width;
+	this->screenW = height;
+
 	graphic = new Graphic;
 	if (!graphic)
 		return;
@@ -33,7 +36,7 @@ void Engine::Init(HWND hWnd, int width, int height)
 
 void Engine::Run()
 {
-	graphic->Frame(plane, backGround);
+	graphic->Frame(plane, backGround, hWnd);
 
 	return;
 }
@@ -62,18 +65,18 @@ void Engine::CreateObject()
 
 	//for (int i = 0; i < MAX_BACKGROUND; i++) {
 	Object temp_player;
-	temp_player.InitObject(graphic->GetDevice(), 512.0f * 2.0f, 700.0f * 2.0f, 50.0f, 50.0f, 3.0f, "PLAYER", Player);
+	temp_player.InitObject(graphic->GetDevice(), 512.0f, 700.0f, 50.0f, 50.0f, 3.0f, screenW, screenH, "PLAYER", Player);
 	plane.push_back(temp_player);
 
 	for (int i = 1; i <= MAX_ENERMY; i++) {
 		Object temp;
-		temp.InitObject(graphic->GetDevice(), (0.0f + i) * 200.0f, 0.0f, 50.0f, 50.0f, 3.0f, "ENERMY", Enermy_1);
+		temp.InitObject(graphic->GetDevice(), (0.0f + i) * 100.0f, 0.0f, 50.0f, 50.0f, 3.0f, screenW, screenH, "ENERMY", Enermy_1);
 		plane.push_back(temp);
 	}
 
-	for (int i = 0; i <= MAX_BACKGROUND; i++) {
+	for (int i = 0; i < MAX_BACKGROUND; i++) {
 		Object temp_back;
-		temp_back.InitObject(graphic->GetDevice(), 0.0f, 0.0f, 700.0f, 768.0f, 0.0f, "BACKGROUND", Background_Space);
+		temp_back.InitObject(graphic->GetDevice(), 0.0f, (0.0f + i) * -768.0f, 700.0f, 768.0f, 1.0f, screenW, screenH, "BACKGROUND", Background_Space);
 		backGround.push_back(temp_back);
 	}
 

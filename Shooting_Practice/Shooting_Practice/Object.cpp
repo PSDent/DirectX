@@ -44,6 +44,9 @@ void Object::SetPosY(float y) {
 	this->posY = y;
 }
 
+string Object::GetTag() {
+	return this->tag;
+}
 
 float Object::GetPosX()
 {
@@ -98,12 +101,12 @@ void Object::SetSpeed(float speed) {
 	this->speed = speed;
 }
 
-bool Object::InitObject(ID3D11Device* device, float posX, float posY, float width, float height, float speed, const string tag, const WCHAR *texPath)
+bool Object::InitObject(ID3D11Device* device, float posX, float posY, float width, float height, float speed, int screenW, int screenH, const string tag, const WCHAR *texPath)
 {
 	bool rs;
 
 	SetHorizontal(0.0f);
-	if (tag == "ENERMY")
+	if (tag == "ENERMY" || tag == "BACKGROUND")
 		SetVertical(1.0f);
 	else
 		SetVertical(0.0f);
@@ -116,7 +119,7 @@ bool Object::InitObject(ID3D11Device* device, float posX, float posY, float widt
 
 	// Initialize Sprite.
 	sprite = new Sprite;
-	rs = sprite->Init(device, this->posX, this->posY, width, height, texPath);
+	rs = sprite->Init(device, this->posX, this->posY, width, height, screenW, screenH, texPath);
 	if (!rs) {
 		MessageBox(NULL, L"Failed to Initialize Sprite.", L"Error", MB_OK);
 		return false;
@@ -139,6 +142,13 @@ void Object::Render(ID3D11DeviceContext *deviceContext)
 		MessageBox(NULL, L"Failed to Rendering Object.", L"Error", MB_OK);
 		return;
 	}
+
+	return;
+}
+
+void Object::ResetPosition() {
+	if (tag == "BACKGROUND" && posY >= 768.0f)
+		posY = -768.0f;
 
 	return;
 }
