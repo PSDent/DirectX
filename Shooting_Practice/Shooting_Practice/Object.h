@@ -4,6 +4,13 @@
 #include "Sprite.h"
 #include "Animation.h"
 #include "Audio.h"
+#include "Input.h"
+
+const float MAX_HORIZONTAL = 1.0f;
+const float MAX_VERTICAL = 1.0f;
+const float INCREASE_HORIZONTAL = 1.0f;
+const float INCREASE_VERTICAL = 1.0f;
+const float SHIFT_SPEED = 6.0f;
 
 class Object
 {
@@ -11,7 +18,7 @@ public:
 	Object();
 	~Object();
 
-	//void Init();
+	void ReceiveInput(Input &input);
 	bool InitObject(ID3D11Device*, float, float, float, float, float, int, int, const string, const WCHAR*);
 	void ResetPosition();
 
@@ -52,6 +59,7 @@ private:
 	float horizontal; // + right, - left
 
 	// Object basic Value 
+	bool isControl;
 	float hp, mp;
 	float speed;
 	float fireRapidity;
@@ -59,6 +67,7 @@ private:
 	float range;
 	float posX, posY;
 	float score;
+	float prevSpeed;
 
 	// Components
 	Sprite *sprite;

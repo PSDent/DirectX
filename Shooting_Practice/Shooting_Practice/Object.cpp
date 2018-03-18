@@ -1,7 +1,5 @@
 #include "Object.h"
 
-
-
 Object::Object()
 {
 	sprite = NULL;
@@ -73,14 +71,14 @@ Audio& Object::GetAudio() {
 
 void Object::MoveHorizon()
 {
-	this->posX += this->horizontal * this->speed;
+	this->posX += this->horizontal * (this->speed);
 
 	return;
 }
 
 void Object::MoveVertical()
 {
-	this->posY += this->vertical * this->speed;
+	this->posY += this->vertical * (this->speed);
 
 	return;
 }
@@ -99,6 +97,7 @@ void Object::SetTag(string tag) {
 
 void Object::SetSpeed(float speed) {
 	this->speed = speed;
+	prevSpeed = speed;
 }
 
 bool Object::InitObject(ID3D11Device* device, float posX, float posY, float width, float height, float speed, int screenW, int screenH, const string tag, const WCHAR *texPath)
@@ -149,6 +148,44 @@ void Object::Render(ID3D11DeviceContext *deviceContext)
 void Object::ResetPosition() {
 	if (tag == "BACKGROUND" && posY >= 768.0f)
 		posY = -768.0f;
+
+	return;
+}
+
+void Object::ReceiveInput(Input &input)
+{
+	if (input.IsLeftPressed()) {
+		if (horizontal >= -MAX_HORIZONTAL)
+			horizontal -= INCREASE_HORIZONTAL;
+	}
+	else if (input.IsRightPressed()) {
+		if (horizontal <= MAX_HORIZONTAL)
+			horizontal += INCREASE_HORIZONTAL;
+	}
+	else
+		horizontal = 0.0f;
+
+	if (input.IsUpPressed()) {
+		if (vertical >= -MAX_VERTICAL)
+			vertical -= INCREASE_VERTICAL;
+	}
+	else if (input.IsDownPressed()) {
+		if (vertical <= MAX_VERTICAL)
+			vertical += INCREASE_VERTICAL;
+	}
+	else
+		vertical = 0.0f;
+
+	if (input.IsSpacePressed()) {
+
+	}
+
+	if (input.IsShiftPressed()) {
+		speed = SHIFT_SPEED;
+	}
+	else
+		speed = prevSpeed;
+
 
 	return;
 }

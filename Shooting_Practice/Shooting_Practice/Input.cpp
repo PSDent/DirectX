@@ -210,3 +210,16 @@ bool Input::IsDownPressed() {
 		return true;
 	return false;
 }
+
+bool Input::IsSpacePressed() {
+	if (keyState[DIK_SPACE] & KEYSCAN)
+		return true;
+	return false;
+}
+
+bool Input::IsShiftPressed() {
+	if (keyState[DIK_LSHIFT] & KEYSCAN)
+		return true;
+	return false;
+}
+

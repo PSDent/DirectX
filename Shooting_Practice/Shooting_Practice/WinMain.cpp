@@ -31,6 +31,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPWSTR lpCmdLine, 
 	engine->Run();
 
 	engine->Release();
+	delete engine;
 
 	return 0;
 }

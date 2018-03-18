@@ -88,6 +88,8 @@ bool Engine::Frame()
 		return false;
 	}
 
+	ApplyInput();
+
 	rs = graphic->Frame(plane, backGround, hWnd);
 	if (FAILED(rs)) {
 		MessageBox(hWnd, L"There is something problem in Graphic system", L"Error", MB_OK);
@@ -108,6 +110,13 @@ void Engine::Release()
 		input->Release();
 		delete input;
 	}
+
+	return;
+}
+
+void Engine::ApplyInput()
+{
+	plane[0].ReceiveInput(*input);
 
 	return;
 }
@@ -144,3 +153,4 @@ void Engine::CreateObject()
 
 	return;
 }
+

@@ -25,6 +25,8 @@ public:
 	bool IsRightPressed();
 	bool IsUpPressed();
 	bool IsDownPressed();
+	bool IsSpacePressed();
+	bool IsShiftPressed();
 
 	// Mouse
 	void GetMouseLocation(int&, int&);
