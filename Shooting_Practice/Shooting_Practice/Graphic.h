@@ -26,6 +26,7 @@ public:
 	ID3D11Device* GetDevice();
 
 private:
+	void Rendering(vector<Object>&, vector<Object>&, HWND, XMMATRIX, XMMATRIX, XMMATRIX);
 	void ObjectRender(vector<Object> &obj, XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:

@@ -27,6 +27,9 @@ public:
 	int GetIndexCount();
 	void Rotate(float);
 
+	int GetWidth();
+	int GetHeight();
+
 private:
 	bool InitBuf(ID3D11Device*);
 	void ReleaseBuf();

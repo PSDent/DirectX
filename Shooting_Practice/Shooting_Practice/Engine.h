@@ -13,6 +13,7 @@
 const float SPEED = 12.0f;
 const int MAX_ENERMY = 5;
 const int MAX_BACKGROUND = 2;
+const int MAX_PROJECTION = 30;
 
 class Engine
 {

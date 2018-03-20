@@ -81,13 +81,21 @@ bool Graphic::Frame(vector<Object> &obj, vector<Object> &background, HWND hWnd)
 	projMatrix = d2d->GetProj();
 	orthoMatrix = d2d->GetOrtho();
 
-	ObjectRender(background, worldMatrix, viewMatrix, orthoMatrix);
-	ObjectRender(obj, worldMatrix, viewMatrix, orthoMatrix);
+	Rendering(obj, background, hWnd, worldMatrix, viewMatrix, orthoMatrix);
 
 	// End the Rendering 
 	d2d->End();
 
 	return true;
+}
+
+void Graphic::Rendering(vector<Object> &obj, vector<Object> &background, HWND hWnd, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix)
+{
+	ObjectRender(background, worldMatrix, viewMatrix, orthoMatrix);
+	ObjectRender(obj[0].GetProjectile(), worldMatrix, viewMatrix, orthoMatrix);
+	ObjectRender(obj, worldMatrix, viewMatrix, orthoMatrix);
+
+	return;
 }
 
 void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix)
@@ -99,18 +107,20 @@ void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX v
 	//worldMatrix = XMMatrixRotationZ(XM_PI);
 
 	for (int i = 0; i < obj.size(); i++) {
+		if (obj[i].GetActiveState()) {
 
-		obj[i].Movement();
-		obj[i].ResetPosition();
+			obj[i].Movement();
+			obj[i].ResetPosition();
 
-		// Input the Object's Vertex data to Shader to Rendering. 
-		obj[i].Render(d2d->GetDeviceContext());
+			// Input the Object's Vertex data to Shader to Rendering. 
+			obj[i].Render(d2d->GetDeviceContext());
 
-		rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
-			worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
-		if (!rs) {
-			MessageBox(NULL, L"Failed to Rendering Shader.", L"Error", MB_OK);
-			return;
+			rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
+				worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
+			if (!rs) {
+				MessageBox(NULL, L"Failed to Rendering Shader.", L"Error", MB_OK);
+				return;
+			}
 		}
 	}
 

@@ -130,22 +130,25 @@ void Engine::CreateObject()
 {
 	// 0 ~ 800 ¿Œ∞‘¿” 801~1024 UI 
 	// 1024 x 768
-	//for (int i = 0; i < MAX_ENERMY; i++) {
-
-	//for (int i = 0; i < MAX_BACKGROUND; i++) {
 	Object temp_player;
-	temp_player.InitObject(graphic->GetDevice(), 512.0f, 700.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "PLAYER", Player);
+	temp_player.InitObject(graphic->GetDevice(), true, 512.0f, 700.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "PLAYER", Player);
 	plane.push_back(temp_player);
+
+	Object temp_projectile;
+	temp_projectile.InitObject(graphic->GetDevice(), false, 0.0f, 0.0f, 9.0f, 54.0f, SPEED + 6.0f, screenW, screenH, "PROJECTIONTILE", ProjectionTile);
+	
+	for(int i = 0; i < MAX_PROJECTION; i++)
+		plane[0].GetProjectile().push_back(temp_projectile);
 
 	for (int i = 1; i <= MAX_ENERMY; i++) {
 		Object temp;
-		temp.InitObject(graphic->GetDevice(), (0.0f + i) * 100.0f, 0.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "ENERMY", Enermy_1);
+		temp.InitObject(graphic->GetDevice(), true, (0.0f + i) * 100.0f, 0.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "ENERMY", Enermy_1);
 		plane.push_back(temp);
 	}
 
 	for (int i = 0; i < MAX_BACKGROUND; i++) {
 		Object temp_back;
-		temp_back.InitObject(graphic->GetDevice(), 0.0f, (0.0f + i) * -768.0f, 700.0f, 768.0f, SPEED, screenW, screenH, "BACKGROUND", Background_Space);
+		temp_back.InitObject(graphic->GetDevice(), true, 0.0f, (0.0f + i) * -768.0f, 700.0f, 768.0f, SPEED, screenW, screenH, "BACKGROUND", Background_Space);
 		backGround.push_back(temp_back);
 	}
 

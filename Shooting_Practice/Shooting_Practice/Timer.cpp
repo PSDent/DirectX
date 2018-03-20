@@ -2,7 +2,8 @@
 
 Timer::Timer()
 {
-
+	fps = 0;
+	count = 0;
 }
 
 Timer::~Timer()
@@ -12,8 +13,6 @@ Timer::~Timer()
 
 bool Timer::Init()
 {
-	fps = 0;
-	count = 0;
 	startTime = timeGetTime();
 
 	return true;

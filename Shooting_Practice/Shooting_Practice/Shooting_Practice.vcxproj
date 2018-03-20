@@ -70,9 +70,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExecutablePath>F:\DirectX SDK\Utilities\bin\x64;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>F:\DirectX SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\DirectX SDK\Lib\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>D:\DXSDK\Utilities\bin\x64;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>D:\DXSDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\DXSDK\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

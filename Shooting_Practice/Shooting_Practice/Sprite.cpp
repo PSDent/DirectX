@@ -268,3 +268,11 @@ bool Sprite::UpdateBuf(ID3D11DeviceContext* deviceContext, int posX, int posY)
 
 	return true;
 }
+
+int Sprite::GetWidth() {
+	return m_spriteW;
+}
+
+int Sprite::GetHeight() {
+	return m_spriteH;
+}

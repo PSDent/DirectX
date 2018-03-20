@@ -10,7 +10,11 @@ const float MAX_HORIZONTAL = 1.0f;
 const float MAX_VERTICAL = 1.0f;
 const float INCREASE_HORIZONTAL = 1.0f;
 const float INCREASE_VERTICAL = 1.0f;
-const float SHIFT_SPEED = 6.0f;
+const float SHIFT_SPEED = 1.0f;
+const int PLAYSCR_W = 700;
+const int PLAYSCR_H = 768;
+const int COOLTIME = 500;
+const int GAP = 40;
 
 class Object
 {
@@ -19,7 +23,7 @@ public:
 	~Object();
 
 	void ReceiveInput(Input &input);
-	bool InitObject(ID3D11Device*, float, float, float, float, float, int, int, const string, const WCHAR*);
+	bool InitObject(ID3D11Device*, bool, float, float, float, float, float, int, int, const string, const WCHAR*);
 	void ResetPosition();
 
 	// Setter
@@ -36,6 +40,8 @@ public:
 
 	// Getter
 	string GetTag();
+	vector<Object>& GetProjectile();
+	bool GetActiveState();
 	int GetPrevPosX();
 	int GetPrevPosY();
 	int GetWidth();
@@ -50,6 +56,9 @@ public:
 private:
 	void MoveVertical();
 	void MoveHorizon();
+	void Shoot();
+	bool IsCooltime();
+	void BeginTimer();
 
 private:
 	string tag;
@@ -57,6 +66,12 @@ private:
 	// to decide object's direction. 
 	float vertical;   // + down, - up
 	float horizontal; // + right, - left
+	int projectileCnt;
+	bool isTimerOn;
+
+	// time
+	int startTime;
+	int nowTime;
 
 	// Object basic Value 
 	bool isControl;
@@ -68,6 +83,9 @@ private:
 	float posX, posY;
 	float score;
 	float prevSpeed;
+	bool active;
+
+	LARGE_INTEGER largeInt, freq;
 
 	// Components
 	Sprite *sprite;
