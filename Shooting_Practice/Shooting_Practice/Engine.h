@@ -11,9 +11,11 @@
 ///////////////////
 // System Value
 const float SPEED = 12.0f;
-const int MAX_ENERMY = 5;
+const int MAX_ENEMY = 19;
 const int MAX_BACKGROUND = 2;
 const int MAX_PROJECTION = 30;
+const float TERM = 80.0f;
+const int SPAWN_POINT = 9;
 
 class Engine
 {
@@ -28,20 +30,23 @@ public:
 	void Release();
 
 private:
+	void Spawn();
 	void CreateObject();
 	void ApplyInput();
 
 private:
 	int screenW, screenH;
 	bool done;
+	bool *spawnPoint;
 	HINSTANCE hInstance;
 
 	Graphic *graphic;
 	Input *input;
+	GameManager *gameMgr;
 
 	vector<Object> backGround;
-	// obj[0] is Player. 
-	// Another objects are Enermy.
+	// obj[0] is PLAYER. 
+	// Another objects are enemy.
 	vector<Object> plane; 
 	HWND hWnd;
 

@@ -6,7 +6,6 @@ Object::Object()
 	sprite = NULL;
 	animation = NULL;
 	audio = NULL;
-	isTimerOn = false;
 }
 
 
@@ -14,6 +13,9 @@ Object::~Object()
 {
 }
 
+void Object::SetActiveState(bool active) {
+	this->active = active;
+}
 
 void Object::SetVertical(float vertical) {
 	this->vertical = vertical;
@@ -128,9 +130,9 @@ bool Object::InitObject(ID3D11Device* device, bool active, float posX, float pos
 
 	this->active = active;
 	SetHorizontal(0.0f);
-	if (tag == "ENERMY" || tag == "BACKGROUND")
+	if (tag == "ENEMY" || tag == "BACKGROUND")
 		SetVertical(1.0f);
-	else if (tag == "PROJECTIONTILE")
+	else if (tag == "PROJECTION_TILE")
 		SetVertical(-1.0f);
 	else
 		SetVertical(0.0f);
@@ -173,7 +175,9 @@ void Object::Render(ID3D11DeviceContext *deviceContext)
 void Object::ResetPosition() {
 	if (tag == "BACKGROUND" && posY >= PLAYSCR_H)
 		posY = -768.0f;
-	else if (tag == "PROJECTIONTILE" && posY <= 0)
+	else if (tag == "ENEMY" && posY >= PLAYSCR_H)
+		active = false;
+	else if (tag == "PROJECTION_TILE" && posY <= 0)
 		active = false;
 
 	return;
@@ -219,11 +223,6 @@ void Object::ReceiveInput(Input &input)
 
 void Object::Shoot()
 {
-	if (!isTimerOn) {
-		BeginTimer();
-		isTimerOn = true;
-	}
-
 	if (!IsCooltime()) {
 		// Left Missile
 		projectile[projectileCnt].active = true;
@@ -249,18 +248,14 @@ bool Object::IsCooltime()
 	LARGE_INTEGER nowTime;
 
 	QueryPerformanceCounter(&nowTime);
-	int mod = (nowTime.QuadPart - largeInt.QuadPart) / freq.QuadPart / 1000 % COOLTIME;
 
-	if (!mod) {
+	// 밀리초 단위 
+	float passedTime = (float)(nowTime.QuadPart - largeInt.QuadPart) / (float)freq.QuadPart * 1000;
+
+	if ((int)passedTime >= COOLTIME) {
+		QueryPerformanceCounter(&largeInt);
 		return false;
 	}
 
 	return true;
-}
-
-void Object::BeginTimer()
-{
-	QueryPerformanceCounter(&largeInt);
-
-	return;
 }

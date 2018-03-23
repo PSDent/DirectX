@@ -52,6 +52,12 @@
     <Filter Include="소스 파일\Engine\Object\Collider">
       <UniqueIdentifier>{3d540e14-8cb3-4e09-9c4c-f06e07ccaa98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Engine\GameManager">
+      <UniqueIdentifier>{edef7e8a-808e-4c27-99c2-bd8c25efc91c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\GameManager">
+      <UniqueIdentifier>{1bed022c-4df1-41ec-af1e-fa70ebe7f486}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -87,9 +93,6 @@
     <ClCompile Include="Engine.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
@@ -107,6 +110,18 @@
     </ClCompile>
     <ClCompile Include="ResourcePath.h">
       <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>소스 파일\Engine\Object\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxColiider.cpp">
+      <Filter>소스 파일\Engine\Object\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnManager.cpp">
+      <Filter>소스 파일\Engine\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Engine\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +158,6 @@
     <ClInclude Include="WinMain.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>헤더 파일\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
@@ -160,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>헤더 파일\Engine\Object\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>헤더 파일\Engine\Object\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxColiider.h">
+      <Filter>헤더 파일\Engine\Object\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>헤더 파일\Engine\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnManager.h">
+      <Filter>헤더 파일\Engine\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

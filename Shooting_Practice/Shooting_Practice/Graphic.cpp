@@ -89,11 +89,11 @@ bool Graphic::Frame(vector<Object> &obj, vector<Object> &background, HWND hWnd)
 	return true;
 }
 
-void Graphic::Rendering(vector<Object> &obj, vector<Object> &background, HWND hWnd, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix)
+void Graphic::Rendering(vector<Object> &plane, vector<Object> &background, HWND hWnd, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix)
 {
-	ObjectRender(background, worldMatrix, viewMatrix, orthoMatrix);
-	ObjectRender(obj[0].GetProjectile(), worldMatrix, viewMatrix, orthoMatrix);
-	ObjectRender(obj, worldMatrix, viewMatrix, orthoMatrix);
+	ObjectRender(background, worldMatrix, viewMatrix, orthoMatrix);               // BackGround
+	ObjectRender(plane[0].GetProjectile(), worldMatrix, viewMatrix, orthoMatrix); // Bullet (Player)
+	ObjectRender(plane, worldMatrix, viewMatrix, orthoMatrix);                    // Plane
 
 	return;
 }

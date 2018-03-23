@@ -13,7 +13,7 @@ const float INCREASE_VERTICAL = 1.0f;
 const float SHIFT_SPEED = 1.0f;
 const int PLAYSCR_W = 700;
 const int PLAYSCR_H = 768;
-const int COOLTIME = 500;
+const int COOLTIME = 100;
 const int GAP = 40;
 
 class Object
@@ -27,6 +27,7 @@ public:
 	void ResetPosition();
 
 	// Setter
+	void SetActiveState(bool);
 	void SetSpeed(float);
 	void SetVertical(float);
 	void SetHorizontal(float);

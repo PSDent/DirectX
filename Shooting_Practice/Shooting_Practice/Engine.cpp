@@ -6,6 +6,8 @@ Engine::Engine()
 	input = NULL;
 	hWnd = 0;
 	done = false;
+	gameMgr = NULL;
+	spawnPoint = NULL;
 }
 
 
@@ -40,6 +42,15 @@ bool Engine::Init(HINSTANCE hInstance, HWND hWnd, int width, int height)
 	rs = input->Init(hInstance, hWnd, width, height);
 	if (!rs) {
 		MessageBox(hWnd, L"Failed to Initialize Input System.", L"Error", MB_OK);
+		return false;
+	}
+
+	gameMgr = new GameManager;
+	if (!gameMgr)
+		return false;
+	rs = gameMgr->init();
+	if (!rs) {
+		MessageBox(hWnd, L"Failed to Initialize GameManager System.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -88,7 +99,10 @@ bool Engine::Frame()
 		return false;
 	}
 
-	ApplyInput();
+	// Check Input State
+	ApplyInput(); 
+	// Spawn Enemy in stage.
+	Spawn();
 
 	rs = graphic->Frame(plane, backGround, hWnd);
 	if (FAILED(rs)) {
@@ -97,6 +111,28 @@ bool Engine::Frame()
 	}
 
 	return true;
+}
+
+void Engine::Spawn()
+{
+	if (!gameMgr->IsSpawnTime())
+		return;
+
+	gameMgr->Spawn();
+	spawnPoint = gameMgr->GetSpawnPoint();
+
+	for (int i = 0; i < SPAWN_POINT; i++) {
+		if (spawnPoint[i]) {
+			int j = 0;
+			while (j + 1 < MAX_ENEMY && plane[++j].GetActiveState());
+			
+			plane[j].SetActiveState(true);
+			plane[j].SetPosX(i * TERM);
+			plane[j].SetPosY(0.0f);
+		}
+	}
+
+	return;
 }
 
 void Engine::Release()
@@ -109,6 +145,11 @@ void Engine::Release()
 	if (input) {
 		input->Release();
 		delete input;
+	}
+
+	if (gameMgr) {
+		gameMgr->Release();
+		delete gameMgr;
 	}
 
 	return;
@@ -131,24 +172,24 @@ void Engine::CreateObject()
 	// 0 ~ 800 ÀÎ°ÔÀÓ 801~1024 UI 
 	// 1024 x 768
 	Object temp_player;
-	temp_player.InitObject(graphic->GetDevice(), true, 512.0f, 700.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "PLAYER", Player);
+	temp_player.InitObject(graphic->GetDevice(), true, 512.0f, 700.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "PLAYER", PLAYER);
 	plane.push_back(temp_player);
 
 	Object temp_projectile;
-	temp_projectile.InitObject(graphic->GetDevice(), false, 0.0f, 0.0f, 9.0f, 54.0f, SPEED + 6.0f, screenW, screenH, "PROJECTIONTILE", ProjectionTile);
+	temp_projectile.InitObject(graphic->GetDevice(), false, 0.0f, 0.0f, 9.0f, 54.0f, SPEED + 6.0f, screenW, screenH, "PROJECTION_TILE", PROJECTION_TILE);
 	
 	for(int i = 0; i < MAX_PROJECTION; i++)
 		plane[0].GetProjectile().push_back(temp_projectile);
 
-	for (int i = 1; i <= MAX_ENERMY; i++) {
+	for (int i = 1; i <= MAX_ENEMY; i++) {
 		Object temp;
-		temp.InitObject(graphic->GetDevice(), true, (0.0f + i) * 100.0f, 0.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "ENERMY", Enermy_1);
+		temp.InitObject(graphic->GetDevice(), false, 0.0f, 0.0f, 50.0f, 50.0f, SPEED, screenW, screenH, "ENEMY", ENERMY_1);
 		plane.push_back(temp);
 	}
 
 	for (int i = 0; i < MAX_BACKGROUND; i++) {
 		Object temp_back;
-		temp_back.InitObject(graphic->GetDevice(), true, 0.0f, (0.0f + i) * -768.0f, 700.0f, 768.0f, SPEED, screenW, screenH, "BACKGROUND", Background_Space);
+		temp_back.InitObject(graphic->GetDevice(), true, 0.0f, (0.0f + i) * -768.0f, 700.0f, 768.0f, SPEED + 4.0f, screenW, screenH, "BACKGROUND", BACKGROUND_SPACE);
 		backGround.push_back(temp_back);
 	}
 
