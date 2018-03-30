@@ -5,6 +5,9 @@
 #include "Animation.h"
 #include "Audio.h"
 #include "Input.h"
+#include "CircleCollider.h"
+#include "Common.h"
+#include "ResourcePath.h"
 
 const float MAX_HORIZONTAL = 1.0f;
 const float MAX_VERTICAL = 1.0f;
@@ -25,6 +28,9 @@ public:
 	void ReceiveInput(Input &input);
 	bool InitObject(ID3D11Device*, bool, float, float, float, float, float, int, int, const string, const WCHAR*);
 	void ResetPosition();
+	void CheckCollision();
+	void PlayAnimation();
+	bool Do_Animation();
 
 	// Setter
 	void SetActiveState(bool);
@@ -38,9 +44,11 @@ public:
 	void SetTag(string tag);
 	void Movement();
 	void Render(ID3D11DeviceContext*);
+	void SetPlayingAnime(bool);
 
 	// Getter
 	string GetTag();
+	bool GetPlayingAnime();
 	vector<Object>& GetProjectile();
 	bool GetActiveState();
 	int GetPrevPosX();
@@ -49,6 +57,7 @@ public:
 	int GetHeight();
 	float GetPosX();
 	float GetPosY();
+	Collider_Info GetColl_Info();
 
 	Sprite& GetSprite();
 	Animation& GetAnime();
@@ -59,7 +68,6 @@ private:
 	void MoveHorizon();
 	void Shoot();
 	bool IsCooltime();
-	void BeginTimer();
 
 private:
 	string tag;
@@ -75,7 +83,7 @@ private:
 	int nowTime;
 
 	// Object basic Value 
-	bool isControl;
+	bool isPlayingAnime;
 	float hp, mp;
 	float speed;
 	float fireRapidity;
@@ -88,11 +96,14 @@ private:
 
 	LARGE_INTEGER largeInt, freq;
 
+	ID3D11Device *device;
+	ID3D11DeviceContext *deviceContext;
+
 	// Components
 	Sprite *sprite;
 	vector<Object> projectile;
 	Animation *animation;
 	Audio *audio;
-
+	CircleCollider *cirCollider;
 };
 

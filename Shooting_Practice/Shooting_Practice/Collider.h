@@ -1,16 +1,22 @@
+#pragma once
+
 #include <DirectXMath.h>
-#include "Object.h"
-//#include 
+#include "Common.h"
 
 class Collider
 {
 public:
 	Collider();
-	Collider(float, float, float, float);
+	Collider(float, float);
 	
 	void Release();
 	virtual ~Collider();
-	bool CheckCollision(vector<Object> &);
+
+	void MoveX(float);
+	void MoveY(float);
+
+	float GetPosX();
+	float GetPosY();
 
 private:
 	virtual bool Check() = 0;
@@ -18,6 +24,4 @@ private:
 
 private:
 	float posX, posY;
-	float collision_W, collision_H;
-	vector<Object> task;
 };

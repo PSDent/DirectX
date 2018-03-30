@@ -122,6 +122,17 @@ void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX v
 				return;
 			}
 		}
+		else if (obj[i].GetPlayingAnime()){
+			if (obj[i].Do_Animation())
+				obj[i].SetPlayingAnime(false);
+
+			rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
+				worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());
+			if (!rs) {
+				MessageBox(NULL, L"Failed to Rendering Shader.", L"Error", MB_OK);
+				return;
+			}
+		}
 	}
 
 	return;

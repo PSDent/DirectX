@@ -123,6 +123,9 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>소스 파일\Engine\GameManager</Filter>
     </ClCompile>
+    <ClCompile Include="TaskManager.cpp">
+      <Filter>소스 파일\Engine\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -184,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="SpawnManager.h">
       <Filter>헤더 파일\Engine\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManager.h">
+      <Filter>헤더 파일\Engine\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

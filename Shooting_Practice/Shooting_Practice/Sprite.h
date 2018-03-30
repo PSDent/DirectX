@@ -26,6 +26,7 @@ public:
 	ID3D11ShaderResourceView* GetTexture();
 	int GetIndexCount();
 	void Rotate(float);
+	bool Animation(ID3D11DeviceContext*, int, int);
 
 	int GetWidth();
 	int GetHeight();
@@ -35,6 +36,8 @@ private:
 	void ReleaseBuf();
 	void RenderBuf(ID3D11DeviceContext*);
 	bool UpdateBuf(ID3D11DeviceContext*, int, int);
+	void UpdateAnime(ID3D11DeviceContext*, int, int);
+	bool IncreaseSection();
 
 	bool LoadTexture(ID3D11Device*, const WCHAR*);
 	void ReleaseTexture();
@@ -50,4 +53,6 @@ private:
 	int m_prevX, m_prevY;
 	int m_screenW, m_screenH;
 
+	int row, column; // За ї­ 
+	
 };

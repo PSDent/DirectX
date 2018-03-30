@@ -5,6 +5,8 @@ Sprite::Sprite()
 	m_vertexBuf = 0;
 	m_indexBuf = 0;
 	m_Texture = 0;
+	row = 0;
+	column = 0;
 }
 
 Sprite::~Sprite() {}
@@ -165,9 +167,7 @@ void Sprite::RenderBuf(ID3D11DeviceContext* deviceContext)
 
 	// Available VertexBuffer to IA
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuf, &stride, &offset);
-
 	deviceContext->IASetIndexBuffer(m_indexBuf, DXGI_FORMAT_R32_UINT, 0);
-
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return;
@@ -200,6 +200,87 @@ void Sprite::ReleaseTexture()
 	return;
 }
 
+bool Sprite::Animation(ID3D11DeviceContext* deviceContext, int posX, int posY)
+{
+	bool rs;
+	UpdateAnime(deviceContext, posX, posY);
+	rs = IncreaseSection();
+	RenderBuf(deviceContext);
+
+	return rs;
+}
+
+bool Sprite::IncreaseSection()
+{
+	++row;
+	if (row == 10) {
+		column++; row = 0;
+	}
+
+	if (column == 10)
+		return true;
+
+	return false;
+}
+
+void Sprite::UpdateAnime(ID3D11DeviceContext* deviceContext, int posX, int posY) 
+{
+	float left, right, top, bot;
+	VertexType *vertices, *verticesPtr;
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT hr;
+
+	left = (float)((m_screenW / 2) * -1) + (float)posX;
+	right = left + (float)m_spriteW;
+	top = (float)(m_screenH / 2) - (float)posY;
+	bot = top - (float)m_spriteH;
+
+	vertices = new VertexType[m_vertexCount];
+	if (!vertices)
+		return;
+
+
+	// Triangle (1)
+	vertices[0].position = XMFLOAT3(left, top, 0.0f);
+	vertices[0].tex = XMFLOAT2(0.1f * row, 0.1f * column);
+
+	vertices[1].position = XMFLOAT3(right, bot, 0.0f);
+	vertices[1].tex = XMFLOAT2(0.1f * (row + 1), 0.1f * (column + 1));
+
+	vertices[2].position = XMFLOAT3(left, bot, 0.0f);
+	vertices[2].tex = XMFLOAT2(0.1f * (row + 1), 0.1f * column);
+
+	// Triangle (2)
+	vertices[3].position = XMFLOAT3(left, top, 0.0f);
+	vertices[3].tex = XMFLOAT2(0.1f * row, 0.1f * column );
+
+	vertices[4].position = XMFLOAT3(right, top, 0.0f);
+	vertices[4].tex = XMFLOAT2(0.1f * row, 0.1f * (column + 1));
+
+	vertices[5].position = XMFLOAT3(right, bot, 0.0f);
+	vertices[5].tex = XMFLOAT2(0.1f * (row + 1), 0.1f * (column + 1));
+	
+
+	/////////
+	// Lock
+	hr = deviceContext->Map(m_vertexBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	// Copy the pointer 
+	verticesPtr = (VertexType*)mappedResource.pData;
+
+	/////////
+	// Copy
+	memcpy(verticesPtr, (void*)vertices, (sizeof(VertexType) * m_vertexCount));
+
+	///////////
+	// UnLock
+	deviceContext->Unmap(m_vertexBuf, 0);
+
+	delete[] vertices;
+
+	return;
+}
+
 bool Sprite::UpdateBuf(ID3D11DeviceContext* deviceContext, int posX, int posY)
 {
 	float left, right, top, bot;
@@ -213,12 +294,6 @@ bool Sprite::UpdateBuf(ID3D11DeviceContext* deviceContext, int posX, int posY)
 
 	m_prevX = posX;
 	m_prevY = posY;
-	/*
-	left = (float)((m_scrX / 2) * -1) + (float)posX;
-	right = left + (float)m_spriteW;
-	top = (float)(m_scrY / 2) - (float)posY;
-	bot = top - (float)m_spriteH;
-	*/
 
 	left = (float)((m_screenW / 2) * -1) + (float)posX;
 	right = left + (float)m_spriteW;
@@ -264,7 +339,7 @@ bool Sprite::UpdateBuf(ID3D11DeviceContext* deviceContext, int posX, int posY)
 	// UnLock
 	deviceContext->Unmap(m_vertexBuf, 0);
 
-	delete[] vertices;
+      	delete[] vertices;
 
 	return true;
 }

@@ -1,29 +1,22 @@
 #include "Collider.h"
 
-Collider::Collider() {
-	posX = 0;
-	posY = 0;
-	collision_H = 0;
-	collision_W = 0;
-}
+Collider::Collider() {}
 
-Collider::Collider(float x, float y, float width, float height) {
+Collider::Collider(float x, float y) {
 	posX = x;
 	posY = y;
-	collision_W = width;
-	collision_H = height;
 }
 
 Collider::~Collider() {
 
 }
 
-bool Collider::CheckCollision(vector<Object> &v)
-{
-
-
-	return false;
-}
+//bool Collider::CheckCollision(vector<Object> &v)
+//{
+//
+//
+//	return false;
+//}
 
 void Collider::SelectionBullet()
 {
@@ -35,4 +28,22 @@ void Collider::Release()
 {
 
 	return;
+}
+
+void Collider::MoveX(float x) {
+	posX = x;
+	return;
+}
+
+void Collider::MoveY(float y) {
+	posY = y;
+	return;
+}
+
+float Collider::GetPosX() {
+	return posX;
+}
+
+float Collider::GetPosY() {
+	return posY;
 }

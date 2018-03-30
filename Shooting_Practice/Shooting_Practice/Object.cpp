@@ -6,6 +6,7 @@ Object::Object()
 	sprite = NULL;
 	animation = NULL;
 	audio = NULL;
+	isPlayingAnime = false;
 }
 
 
@@ -32,6 +33,9 @@ void Object::SetPivotX(float x){
 	this->pivotX = x;
 }
 
+void Object::SetPlayingAnime(bool a) {
+	this->isPlayingAnime = a;
+}
 
 void Object::SetPivotY(float y){
 	this->pivotY = y;
@@ -49,6 +53,10 @@ void Object::SetPosY(float y) {
 	this->posY = y;
 }
 
+bool Object::GetPlayingAnime() {
+	return isPlayingAnime;
+}
+
 string Object::GetTag() {
 	return this->tag;
 }
@@ -61,6 +69,17 @@ float Object::GetPosX()
 float Object::GetPosY()
 {
 	return this->posY;
+}
+
+Collider_Info Object::GetColl_Info() {
+	Collider_Info a{
+		cirCollider->GetPosX(),
+		cirCollider->GetPosY(),
+		cirCollider->GetRad(),
+		active,
+		tag
+	};
+	return a;
 }
 
 Sprite& Object::GetSprite() {
@@ -81,28 +100,36 @@ vector<Object>& Object::GetProjectile() {
 
 void Object::MoveHorizon()
 {
-	if (tag == "PLAYER") {
+	if (tag == Player) {
 		if ((posX + horizontal * speed > PLAYSCR_W - sprite->GetWidth()) || (posX + horizontal * speed < 0))
 			return;
-		else
+		else {
 			posX += horizontal * speed;
+			cirCollider->MoveX(posX + sprite->GetWidth() / 2);
+		}
 	}
-	else
+	else {
 		posX += horizontal * speed;
+		cirCollider->MoveX(posX + sprite->GetWidth() / 2);
+	}
 
 	return;
 }
 
 void Object::MoveVertical()
 {
-	if (tag == "PLAYER") {
+	if (tag == Player) {
 		if ((posY + vertical * speed > PLAYSCR_H - sprite->GetHeight()) || (posY + vertical * speed < 0))
 			return;
-		else
+		else {
 			posY += vertical * speed;
+			cirCollider->MoveY(posY + sprite->GetHeight()/2);
+		}
 	}
-	else
+	else {
 		posY += vertical * speed;
+		cirCollider->MoveY(posY + sprite->GetHeight() / 2);
+	}
 
 	return;
 }
@@ -126,16 +153,22 @@ void Object::SetSpeed(float speed) {
 
 bool Object::InitObject(ID3D11Device* device, bool active, float posX, float posY, float width, float height, float speed, int screenW, int screenH, const string tag, const WCHAR *texPath)
 {
+	this->device = device;
 	bool rs;
 
 	this->active = active;
 	SetHorizontal(0.0f);
-	if (tag == "ENEMY" || tag == "BACKGROUND")
+	if (tag == Enemy || tag == BackGround) {
 		SetVertical(1.0f);
-	else if (tag == "PROJECTION_TILE")
+
+	}
+	else if (tag == Projectile) {
 		SetVertical(-1.0f);
-	else
+	}
+	else {
 		SetVertical(0.0f);
+	}
+
 	SetPosX(posX);
 	SetPosY(posY);
 	SetSpeed(speed - 8.0f);
@@ -151,6 +184,17 @@ bool Object::InitObject(ID3D11Device* device, bool active, float posX, float pos
 		return false;
 	}
 	
+	cirCollider = new CircleCollider(posX + (width / 2), posY + (height / 2), 10.0f);
+	if (!cirCollider) {
+		MessageBox(NULL, L"Failed to Initialize Collider.", L"Error", MB_OK);
+		return false;
+	}
+
+	cirCollider->SetRad(sprite->GetWidth() / 2);
+
+	animation = new Animation;
+	animation->Init();
+	
 
 	// Initialize Animation
 
@@ -162,6 +206,7 @@ bool Object::InitObject(ID3D11Device* device, bool active, float posX, float pos
 void Object::Render(ID3D11DeviceContext *deviceContext)
 {
 	bool rs;
+	this->deviceContext = deviceContext;
 
 	rs = this->sprite->Render(deviceContext, this->posX, this->posY);
 	if (!rs) {
@@ -172,12 +217,25 @@ void Object::Render(ID3D11DeviceContext *deviceContext)
 	return;
 }
 
+void Object::PlayAnimation()
+{
+	this->sprite->Init(device, this->posX, this->posY, 60.0f, 60.0f, 1024.0f, 768.0f, DESTROY_ANIME);
+	this->SetPlayingAnime(true);
+
+	return;
+}
+
+bool Object::Do_Animation()
+{
+	return sprite->Animation(deviceContext, posX, posY);
+}
+
 void Object::ResetPosition() {
-	if (tag == "BACKGROUND" && posY >= PLAYSCR_H)
+	if (tag == BackGround && posY >= PLAYSCR_H)
 		posY = -768.0f;
-	else if (tag == "ENEMY" && posY >= PLAYSCR_H)
+	else if (tag == Enemy && posY >= PLAYSCR_H)
 		active = false;
-	else if (tag == "PROJECTION_TILE" && posY <= 0)
+	else if (tag == Projectile && posY <= 0)
 		active = false;
 
 	return;
@@ -216,7 +274,6 @@ void Object::ReceiveInput(Input &input)
 	}
 	else
 		speed = prevSpeed;
-
 
 	return;
 }
@@ -258,4 +315,11 @@ bool Object::IsCooltime()
 	}
 
 	return true;
+}
+
+void Object::CheckCollision()
+{
+
+
+	return;
 }

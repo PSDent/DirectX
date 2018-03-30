@@ -1,19 +1,23 @@
 #include "CircleCollider.h"
 
-CircleCollider::CircleCollider()
+CircleCollider::CircleCollider() : Collider()
 {
-
 }
 
-CircleCollider::CircleCollider(float posX, float posY, float width, float height) 
-	: Collider(posX, posY, width, height)
-{
-
-}
+CircleCollider::CircleCollider(float posX, float posY, float rad)
+	: Collider(posX, posY), rad(rad)
+{}
 
 CircleCollider::~CircleCollider()
 {
 
+}
+
+void CircleCollider::Init()
+{
+
+
+	return;
 }
 
 bool CircleCollider::Check()
@@ -21,4 +25,19 @@ bool CircleCollider::Check()
 
 
 	return false;
+}
+void CircleCollider::SelectionBullet()
+{
+
+	return;
+}
+
+void CircleCollider::SetRad(float r)
+{
+	this->rad = r;
+	return;
+}
+
+float CircleCollider::GetRad() {
+	return rad;
 }

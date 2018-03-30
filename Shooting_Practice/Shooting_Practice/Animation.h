@@ -1,10 +1,6 @@
 #pragma once
 #include "Sprite.h"
-
-typedef struct {
-	Sprite animation;
-	int cut_W, cut_H;
-}Animation_Info;
+#include <vector>
 
 class Animation
 {
@@ -16,8 +12,8 @@ public:
 	void RunAnimation();
 
 private:
-	//vector<Animation_Info> sprite_anime;
-
+	bool isAnimeOn;
 
 };
 
+	

@@ -30,14 +30,12 @@ void SpawnManager::ReadStageLine()
 			return;
 
 		fin->get(input);
-		if (input == '0') {
+		if (input == '0') 
 			spawnPoint[i] = false;
-			++i;
-		}
-		else if(input == '1') {
+		else if(input == '1') 
 			spawnPoint[i] = true;
-			++i;
-		}
+
+		++i;
 	}
 
 	return;

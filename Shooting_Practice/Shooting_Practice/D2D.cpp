@@ -260,7 +260,7 @@ void D2D::End()
 {
 	if (m_vsync) // Fixed Refresh rate.
 		m_swapChain->Present(1, 0);
-	else         // non - fixed Refresh rate.
+       	else         // non - fixed Refresh rate.
 		m_swapChain->Present(0, 0);
 
 	return;
