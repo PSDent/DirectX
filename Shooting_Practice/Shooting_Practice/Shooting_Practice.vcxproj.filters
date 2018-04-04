@@ -58,11 +58,11 @@
     <Filter Include="소스 파일\Engine\GameManager">
       <UniqueIdentifier>{1bed022c-4df1-41ec-af1e-fa70ebe7f486}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Console">
+      <UniqueIdentifier>{a9667282-357b-4250-82d1-4b4fe898a1ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>소스 파일\Engine\Object</Filter>
     </ClCompile>
@@ -108,9 +108,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>소스 파일\Engine\Object\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="ResourcePath.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
       <Filter>소스 파일\Engine\Object\Collider</Filter>
     </ClCompile>
@@ -125,6 +122,12 @@
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>소스 파일\Engine\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcePath.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +161,6 @@
     <ClInclude Include="Engine.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="WinMain.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
@@ -193,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Common.h">
       <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="WinMain.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>소스 파일\Console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

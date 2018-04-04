@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <iostream>
 
 Engine::Engine()
 {
@@ -22,7 +23,7 @@ bool Engine::Init(HINSTANCE hInstance, HWND hWnd, int width, int height)
 
 	this->hWnd = hWnd;
 	this->screenW = width;
-	this->screenW = height;
+	this->screenH = height;
 	this->hInstance = hInstance;
 
 	graphic = new Graphic;
@@ -80,6 +81,9 @@ void Engine::Run()
 			if (!rs) {
 				MessageBox(hWnd, L"There is Something Problem that while Proccesing Frame.", L"Error", MB_OK);
 				done = true;
+			}
+			else {
+
 			}
 		}
 

@@ -177,13 +177,22 @@ bool Object::InitObject(ID3D11Device* device, bool active, float posX, float pos
 	SetTag(tag);
 
 	// Initialize Sprite.
-	sprite = new Sprite;
-	rs = sprite->Init(device, this->posX, this->posY, width, height, screenW, screenH, texPath);
+	plane = new Sprite;
+	rs = plane->Init(device, this->posX, this->posY, width, height, screenW, screenH, texPath);
 	if (!rs) {
 		MessageBox(NULL, L"Failed to Initialize Sprite.", L"Error", MB_OK);
 		return false;
 	}
-	
+
+	sprite = plane;
+
+	explosion = new Sprite;
+	rs = explosion->Init(device, this->posX, this->posY, 100.0f, 100.0f, 1024.0f, 768.0f, DESTROY_ANIME);
+	if (!rs) {
+		MessageBox(NULL, L"Failed to Initialize Sprite.", L"Error", MB_OK);
+		return false;
+	}
+
 	cirCollider = new CircleCollider(posX + (width / 2), posY + (height / 2), 10.0f);
 	if (!cirCollider) {
 		MessageBox(NULL, L"Failed to Initialize Collider.", L"Error", MB_OK);
@@ -219,30 +228,42 @@ void Object::Render(ID3D11DeviceContext *deviceContext)
 
 void Object::PlayAnimation()
 {
-	this->sprite->Init(device, this->posX, this->posY, 60.0f, 60.0f, 1024.0f, 768.0f, DESTROY_ANIME);
+	sprite = explosion;
 	this->SetPlayingAnime(true);
 
 	return;
 }
 
-bool Object::Do_Animation()
-{
+bool Object::Do_Animation(){
 	return sprite->Animation(deviceContext, posX, posY);
+}
+
+void Object::EndAnimation() {
+	SetPlayingAnime(false);
+
+	sprite = plane;
+
+	return;
 }
 
 void Object::ResetPosition() {
 	if (tag == BackGround && posY >= PLAYSCR_H)
 		posY = -768.0f;
-	else if (tag == Enemy && posY >= PLAYSCR_H)
+	else if ( (tag == Enemy && posY >= PLAYSCR_H) || (tag == Projectile && posY <= 0))
 		active = false;
-	else if (tag == Projectile && posY <= 0)
-		active = false;
-
+	/*else if (tag == Projectile && posY <= 0)
+		active = false;*/
 	return;
 }
 
 void Object::ReceiveInput(Input &input)
 {
+	if (!this->active)
+		return;
+
+	if (input.IsSpacePressed()) {
+		Shoot();
+	}
 	if (input.IsLeftPressed()) {
 		if (horizontal >= -MAX_HORIZONTAL)
 			horizontal -= INCREASE_HORIZONTAL;
@@ -264,10 +285,6 @@ void Object::ReceiveInput(Input &input)
 	}
 	else
 		vertical = 0.0f;
-
-	if (input.IsSpacePressed()) {
-		Shoot();
-	}
 
 	if (input.IsShiftPressed()) {
 		speed = SHIFT_SPEED;

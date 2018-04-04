@@ -44,7 +44,8 @@ bool Graphic::Init(HWND hWnd, int width, int height)
 	// Camera z값 주의하시길.. 무조건 0 미만이여야함. 
 	// 안 그러면 카메라의 z축과 스프라이트의 z축이 너무 가까워서 안보이거나 문제 발생
 	// 카메라의 좌상단 좌표를 0, 0 으로 맞춘다.
-	camera->SetPos(130.0f, height / 2.0f * -1.0f, -10.0f);
+	//camera->SetPos(130.0f, height / 2.0f * -1.0f, -10.0f);
+	camera->SetPos(0.0f, 0.0f, -10.0f);
 	camera->SetRot(0.0f, 0.0f, 0.0f);
 
 	/////////////
@@ -124,7 +125,9 @@ void Graphic::ObjectRender(vector<Object> &obj, XMMATRIX worldMatrix, XMMATRIX v
 		}
 		else if (obj[i].GetPlayingAnime()){
 			if (obj[i].Do_Animation())
-				obj[i].SetPlayingAnime(false);
+				obj[i].EndAnimation();
+
+			obj[i].Render(d2d->GetDeviceContext());
 
 			rs = shader->Render(d2d->GetDeviceContext(), obj[i].GetSprite().GetIndexCount(),
 				worldMatrix, viewMatrix, orthoMatrix, obj[i].GetSprite().GetTexture());

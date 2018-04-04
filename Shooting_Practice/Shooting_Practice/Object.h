@@ -30,6 +30,7 @@ public:
 	void ResetPosition();
 	void CheckCollision();
 	void PlayAnimation();
+	void EndAnimation();
 	bool Do_Animation();
 
 	// Setter
@@ -44,7 +45,7 @@ public:
 	void SetTag(string tag);
 	void Movement();
 	void Render(ID3D11DeviceContext*);
-	void SetPlayingAnime(bool);
+	
 
 	// Getter
 	string GetTag();
@@ -64,6 +65,7 @@ public:
 	Audio& GetAudio();
 
 private:
+	void SetPlayingAnime(bool);
 	void MoveVertical();
 	void MoveHorizon();
 	void Shoot();
@@ -101,6 +103,8 @@ private:
 
 	// Components
 	Sprite *sprite;
+	Sprite *plane;
+	Sprite *explosion;
 	vector<Object> projectile;
 	Animation *animation;
 	Audio *audio;

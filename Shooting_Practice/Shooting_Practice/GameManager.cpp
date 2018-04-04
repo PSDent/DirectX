@@ -62,7 +62,7 @@ void GameManager::ApplyCollision(vector<Collision_Info> col, vector<Object>& obj
 	for (int i = 0; i < col.size(); i++) {
 		if (col[i].to == Enemy && col[i].from == Projectile) {
 			obj[col[i].to_index].SetActiveState(false);
-			//obj[col[i].to_index].PlayAnimation();
+			obj[col[i].to_index].PlayAnimation();
 			obj[0].GetProjectile()[col[i].from_index].SetActiveState(false);
 		}
 		else if (col[i].to == Player) {
