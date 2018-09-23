@@ -54,7 +54,7 @@ Collider_Info& TaskManager::GetTask_Enemy(){
 	return *task_Enemy;
 }
 
-void TaskManager::InsertTask_Enemy(Collider_Info &info)
+void TaskManager::InsertTask_Enemy(Collider_Info info)
 {
 	if (index_Enemy == MAX_ENEMY)
 		index_Enemy = 0;
@@ -66,7 +66,7 @@ Collider_Info& TaskManager::GetTask_Player() {
 	return *task_Player;
 }
 
-void TaskManager::InsertTask_Player(Collider_Info &info)
+void TaskManager::InsertTask_Player(Collider_Info info)
 {
 	if (index_Player == MAX_PROJECTION + 1)
 		index_Player = 0;

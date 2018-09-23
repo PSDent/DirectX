@@ -16,10 +16,10 @@ public:
 	bool Init();
 
 	Collider_Info& GetTask_Enemy();
-	void InsertTask_Enemy(Collider_Info&);
+	void InsertTask_Enemy(Collider_Info);
 
 	Collider_Info& GetTask_Player();
-	void InsertTask_Player(Collider_Info&);
+	void InsertTask_Player(Collider_Info);
 
 public:
 

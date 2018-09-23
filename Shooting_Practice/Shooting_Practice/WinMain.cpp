@@ -33,14 +33,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPWSTR lpCmdLine, 
 	}
 	Initialized = true;
 
-	RedirectIOToConsole(); // 디버깅용 콘솔창 
+	//RedirectIOToConsole(); // 디버깅용 콘솔창 
 
 	FILE *p;
 	freopen_s(&p, "CONOUT$", "wt", stdout); 
 	engine->Run();
 
 	engine->Release();
-	::FreeConsole(); // 콘솔창을 제거한다.
+	//::FreeConsole(); // 콘솔창을 제거한다.
 	delete engine;
 
 	return 0;

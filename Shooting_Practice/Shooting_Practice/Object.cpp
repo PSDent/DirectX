@@ -72,14 +72,14 @@ float Object::GetPosY()
 }
 
 Collider_Info Object::GetColl_Info() {
-	Collider_Info a{
+	Collider_Info info{
 		cirCollider->GetPosX(),
 		cirCollider->GetPosY(),
 		cirCollider->GetRad(),
 		active,
 		tag
 	};
-	return a;
+	return info;
 }
 
 Sprite& Object::GetSprite() {
